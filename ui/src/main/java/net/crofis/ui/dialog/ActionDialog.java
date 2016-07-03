@@ -22,7 +22,7 @@ import java.util.ArrayList;
 /**
  * Created by Tony Zaitoun on 5/14/2016.
  */
-public class ActionDialog {
+public class ActionDialog extends BaseAlertDialog{
     private Context context;
     private TextView title;
     private TextView description;
@@ -88,6 +88,7 @@ public class ActionDialog {
     /**
      * Show the dialog.
      */
+    @Override
     public void show(){
         dialog.setCancelable(this.cancelable);
         dialog.show();
@@ -96,6 +97,7 @@ public class ActionDialog {
     /**
      * Dismiss the dialog.
      */
+    @Override
     public void dismiss(){
         if(!isLocked) dialog.dismiss();
     }

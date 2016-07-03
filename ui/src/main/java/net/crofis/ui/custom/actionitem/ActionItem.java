@@ -64,6 +64,7 @@ public class ActionItem {
      * Example on how to override:
      *
      *   //The following code snippet, will use the default item but it will be designed like iOS.
+     *
      *   View convertView =  LayoutInflater.from(context).inflate(R.layout.ui_general_action, null, false);
      *   TextView title = (TextView) convertView.findViewById(R.id.action_title);
      *   title.setText(getTitle());

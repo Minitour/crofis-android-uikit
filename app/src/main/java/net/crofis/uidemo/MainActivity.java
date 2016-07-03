@@ -1,6 +1,5 @@
 package net.crofis.uidemo;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,16 +10,15 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import net.crofis.ui.camera.CameraActivity;
 import net.crofis.ui.camera.SquareCameraActivity;
 import net.crofis.ui.custom.actionitem.ActionItem;
 import net.crofis.ui.custom.actionitem.ActionItemClickListener;
+import net.crofis.ui.custom.actionitem.UIAlertAction;
 import net.crofis.ui.custom.cropper.CropImage;
 import net.crofis.ui.custom.cropper.CropImageView;
 import net.crofis.ui.custom.imagepicker.activities.AlbumSelectActivity;
@@ -120,29 +118,41 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn5).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CameraActivity.class);
-                //intent.putExtra(CameraActivity.FLAG_ALLOW_CROP,true);
-
-                //intent.putExtra(SquareCameraActivity.FLAG_SAVE_TO_STORAGE,true);
-                intent.putExtra(CameraActivity.FLAG_SET_CROP_OPTIONAL, true);
-                //intent.putExtra(CameraActivity.FLAG_SET_CROP_ASPECT_RATIO, CameraActivity.CROP_RATIO_1_1);
-                startActivityForResult(intent, CameraActivity.REQUEST_CODE);
+//                Intent intent = new Intent(MainActivity.this, CameraActivity.class);
+//                intent.putExtra(CameraActivity.FLAG_SET_CROP_OPTIONAL,true);
+//                intent.putExtra(SquareCameraActivity.FLAG_SAVE_TO_STORAGE,true);
+//                startActivityForResult(intent, CameraActivity.REQUEST_CODE);
 
 
+                CameraActivity.activity()
+                        .setCropOptional(true)
+                        .saveFileToStorage(true)
+                        .setCropAspectRatio(1,3)
+                        .start(MainActivity.this);
             }
         });
 
         findViewById(R.id.btn6).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SquareCameraActivity.class);
-                //intent.putExtra(SquareCameraActivity.FLAG_ALLOW_IMAGE_CROP,true);
-                //intent.putExtra(SquareCameraActivity.FLAG_DISPLAY_FLASH_TOGGLE,false);
-                //intent.putExtra(SquareCameraActivity.FLAG_DISPLAY_SWITCH_CAM,false);
-                //intent.putExtra(SquareCameraActivity.FLAG_SAVE_TO_STORAGE,true);
-                intent.putExtra(SquareCameraActivity.FLAG_SET_CROP_OPTIONAL, true);
-                intent.putExtra(SquareCameraActivity.FLAG_SET_CROP_ASPECT_RATIO, SquareCameraActivity.CROP_RATIO_1_1);
-                startActivityForResult(intent, SquareCameraActivity.REQUEST_CODE);
+//                Intent intent = new Intent(MainActivity.this, SquareCameraActivity.class);
+//                //intent.putExtra(SquareCameraActivity.FLAG_ALLOW_IMAGE_CROP,true);
+//                intent.putExtra(SquareCameraActivity.FLAG_DISPLAY_FLASH_TOGGLE,false);
+//                intent.putExtra(SquareCameraActivity.FLAG_DISPLAY_SWITCH_CAM,false);
+//                //intent.putExtra(SquareCameraActivity.FLAG_SAVE_TO_STORAGE,true);
+//                intent.putExtra(SquareCameraActivity.FLAG_SET_CROP_OPTIONAL, true);
+//                intent.putExtra(SquareCameraActivity.FLAG_SET_CROP_ASPECT_RATIO, SquareCameraActivity.CROP_RATIO_1_1);
+//                startActivityForResult(intent, SquareCameraActivity.REQUEST_CODE);
+
+                SquareCameraActivity.activity()
+                        .displayFlashToggle(false)
+                        .displayCameraSwitchToggle(false)
+                        .setCropOptional(true)
+                        .setCropAspectRatio(4,3)
+                        .start(MainActivity.this);
+
+
+
             }
         });
 
@@ -152,10 +162,11 @@ public class MainActivity extends AppCompatActivity {
                 ArrayList<ActionItem> items = new ArrayList<>();
                 Drawable icon = MainActivity.this.getResources().getDrawable(R.drawable.common_ic_googleplayservices);
                 for (int i = 0; i < 4; i++) {
+                    final int finalI = i;
                     ActionItem item = new ActionItem(icon, "item " + (i + 1), new ActionItemClickListener() {
                         @Override
                         public void onActionSelected() {
-
+                            Toast.makeText(MainActivity.this,"item "+(finalI +1)+" selected.",Toast.LENGTH_SHORT).show();
                         }
                     });
                     items.add(item);
@@ -253,28 +264,4 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 
-class UIAlertAction extends ActionItem{
 
-    /**
-     * Default constructor.
-     *
-     * @param icon     - Action Icon
-     * @param title    - Action Title
-     * @param listener - Action Listener
-     */
-    public UIAlertAction(Drawable icon, String title, ActionItemClickListener listener) {
-        super(icon, title, listener);
-    }
-
-    @Override
-    public View getView(Context context, boolean showActionIcons) {
-        View convertView =  LayoutInflater.from(context).inflate(R.layout.ui_general_action, null, false);
-        TextView title = (TextView) convertView.findViewById(R.id.action_title);
-        title.setText(getTitle());
-        title.setGravity(Gravity.CENTER);
-        title.setTextColor(context.getResources().getColor(R.color.blue));
-        if (false)((ImageView) convertView.findViewById(R.id.action_icon)).setImageDrawable(getIcon());
-        else convertView.findViewById(R.id.action_icon).setVisibility(View.GONE);
-        return convertView;
-    }
-}

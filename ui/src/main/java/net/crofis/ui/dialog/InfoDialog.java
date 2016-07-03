@@ -23,7 +23,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by Tony Zaitoun on 4/6/2016.
  */
-public class InfoDialog {
+public class InfoDialog extends BaseAlertDialog{
 
     private static final String TAG = "InfoDialog.class";
 
@@ -108,6 +108,7 @@ public class InfoDialog {
     /**
      * Show the dialog.
      */
+    @Override
     public void show(){
         if(!isLocked) {
 
@@ -183,6 +184,7 @@ public class InfoDialog {
     /**
      * Dismiss the dialog.
      */
+    @Override
     public void dismiss(){
         if(!isLocked) dialog.dismiss();
         else Log.e(TAG,"Dialog is locked.");

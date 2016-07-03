@@ -24,7 +24,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by Tony Zaitoun on 4/6/2016.
  */
-public class NewMessageDialog {
+public class NewMessageDialog extends BaseAlertDialog{
 
     private static final String TAG = "NewMessageDialog.class";
 
@@ -253,6 +253,7 @@ public class NewMessageDialog {
     /**
      * Show the dialog.
      */
+    @Override
     public void show(){
         if(!isLocked) {
             if (title.getText().length() == 0) title.setVisibility(View.GONE);
@@ -298,6 +299,7 @@ public class NewMessageDialog {
     /**
      * Dismiss the dialog.
      */
+    @Override
     public void dismiss(){
         if(!isLocked) dialog.dismiss();
         else Log.e(TAG,"Dialog is locked.");

@@ -20,7 +20,7 @@ import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
 /**
  * Created by Tony Zaitoun on 5/8/16.
  */
-public class LoadingDialog {
+public class LoadingDialog extends BaseAlertDialog{
 
     private static final String TAG = "LoadingDialog.class";
 
@@ -170,6 +170,7 @@ public class LoadingDialog {
     /**
      * Show the dialog.
      */
+    @Override
     public void show(){
 
         dialog.setCancelable(this.cancelable);
@@ -179,6 +180,7 @@ public class LoadingDialog {
     /**
      * Dismiss the dialog.
      */
+    @Override
     public void dismiss(){
         if(!isLocked) dialog.dismiss();
         else Log.e(TAG, "Dialog is locked.");

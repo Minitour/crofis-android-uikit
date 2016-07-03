@@ -33,7 +33,6 @@ import net.crofis.ui.R;
 import net.crofis.ui.camera.CameraParams;
 import net.crofis.ui.custom.PreviewSurfaceView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +43,7 @@ import static android.view.Surface.ROTATION_90;
 /**
  * Created by Tony Zaitoun on 4/13/2016.
  */
-public class CameraDialog implements SurfaceHolder.Callback {
+public class CameraDialog extends BaseAlertDialog implements SurfaceHolder.Callback {
 
     /**Application context**/
     private Context context;
@@ -319,6 +318,7 @@ public class CameraDialog implements SurfaceHolder.Callback {
      * If CameraDialog was initialized with image, the SurfaceView's holder will not have a callback.
      * else, CameraDialog will be called normally.
      */
+    @Override
     public void show(){
         if (android.os.Build.VERSION.SDK_INT >= 23){
             String[] perms = {"android.permission.CAMERA"};
@@ -544,6 +544,7 @@ public class CameraDialog implements SurfaceHolder.Callback {
     /**
      * Dismiss the dialog.
      */
+    @Override
     public void dismiss(){
         dialog.dismiss();
     }

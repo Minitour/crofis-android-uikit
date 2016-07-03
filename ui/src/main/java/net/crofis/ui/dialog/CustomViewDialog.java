@@ -17,7 +17,7 @@ import net.crofis.ui.R;
 /**
  * Created by Tony Zaitoun on 6/8/2016.
  */
-public class CustomViewDialog {
+public class CustomViewDialog extends BaseAlertDialog {
     private static final String TAG = "CustomViewDialog";
 
     /**Application context**/
@@ -81,6 +81,7 @@ public class CustomViewDialog {
         dialog = dialogBuilder.create();
     }
 
+    @Override
     public void show(){
         if(getTitle()==null) this.title.setVisibility(View.GONE);
         if(NegativeListener == null) this.negativeButton.setVisibility(View.GONE);
@@ -92,6 +93,7 @@ public class CustomViewDialog {
         dialog.show();
     }
 
+    @Override
     public void dismiss(){
         if(!isLocked) dialog.dismiss();
         else Log.e(TAG,"Dialog is locked.");

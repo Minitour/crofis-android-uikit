@@ -1,6 +1,7 @@
 package net.crofis.ui.camera;
 
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -186,11 +187,14 @@ public class SquareCameraActivity extends AppCompatActivity implements SurfaceHo
     private boolean SHOW_PROGRESS_BAR;
     private int CROP_ASPECT_RATIO;
     private boolean RETURN_DATA_AS_BYTE_ARRAY;
-
+    private static final int CROP_RATIO_CUSTOM = -2;
     public static final int CROP_RATIO_1_1 = 0;
     public static final int CROP_RATIO_2_1 = 1;
     public static final int CROP_RATIO_4_3 = 2;
     public static final int CROP_RATIO_16_9 = 3;
+    private int cropAspectX = -1;
+    private int cropAspectY= - 1;
+
     /**
      * Public static final Keys that are used to start the activity with custom parameters.
      */
@@ -332,13 +336,17 @@ public class SquareCameraActivity extends AppCompatActivity implements SurfaceHo
         DISPLAY_SWITCH_CAM = intent.getBooleanExtra(FLAG_DISPLAY_SWITCH_CAM,true);
         ALLOW_ZOOM_GESTURE = intent.getBooleanExtra(FLAG_ALLOW_ZOOM_GESTURE, true);
         ALLOW_ROTATION_ANIMATION = intent.getBooleanExtra(FLAG_ALLOW_ROTATION_ANIMATION,true);
-        ALLOW_IMAGE_CROP = intent.getBooleanExtra(FLAG_ALLOW_IMAGE_CROP,false);
+        //ALLOW_IMAGE_CROP = intent.getBooleanExtra(FLAG_ALLOW_IMAGE_CROP,false);
         SET_CROP_OPTIONAL = intent.getBooleanExtra(FLAG_SET_CROP_OPTIONAL,false);
-        if(!SET_CROP_OPTIONAL) ALLOW_IMAGE_CROP = intent.getBooleanExtra(FLAG_ALLOW_CROP,false);
+       //if(!SET_CROP_OPTIONAL) ALLOW_IMAGE_CROP = intent.getBooleanExtra(FLAG_ALLOW_CROP,false);
         SAVE_FILE_TO_STORAGE = intent.getBooleanExtra(FLAG_SAVE_TO_STORAGE,false);
         if(SAVE_FILE_TO_STORAGE) RETURN_DATA_AS_BYTE_ARRAY = intent.getBooleanExtra(FLAG_RETURN_DATA_AS_BYTE_ARRAY,true);
         SHOW_PROGRESS_BAR = intent.getBooleanExtra(FLAG_SHOW_PROGRESS_BAR,true);
         CROP_ASPECT_RATIO = intent.getIntExtra(FLAG_SET_CROP_ASPECT_RATIO,-1);
+        if(CROP_ASPECT_RATIO == -2) {
+            cropAspectX = intent.getIntExtra("cropAspectX",-1);
+            cropAspectY = intent.getIntExtra("cropAspectY",-1);
+        }
         cam_view = intent.getIntExtra(FLAG_LOAD_CAM,BACK_CAM_ID);
 
         if(cam_view!=BACK_CAM_ID||cam_view!=FRONT_CAM_ID) cam_view =BACK_CAM_ID; //make sure cam_view is either 0 or 1
@@ -398,6 +406,10 @@ public class SquareCameraActivity extends AppCompatActivity implements SurfaceHo
                         break;
                     case CROP_RATIO_16_9:
                         imageCropper.setAspectRatio(16,9);
+                        break;
+                    case CROP_RATIO_CUSTOM:
+                        if(cropAspectX <= 0 || cropAspectY <= 0) break;
+                        imageCropper.setAspectRatio(cropAspectX,cropAspectY);
                         break;
                     default:
                         findViewById(R.id.action_change_ratio).setVisibility(View.VISIBLE);
@@ -566,7 +578,7 @@ public class SquareCameraActivity extends AppCompatActivity implements SurfaceHo
             @Override
             public void onClick(View v) {
 
-                if(ALLOW_IMAGE_CROP){
+                if(false){
                     findViewById(R.id.camera_view).setVisibility(View.GONE);
                     findViewById(R.id.crop_view_layout).setVisibility(View.VISIBLE);
                     final CropImageView imageCropper = new CropImageView(SquareCameraActivity.this);
@@ -1172,7 +1184,7 @@ public class SquareCameraActivity extends AppCompatActivity implements SurfaceHo
                     previewIv.setVisibility(View.VISIBLE);
                     if (isFlashAvailable) flashToggleButton.setVisibility(View.GONE);
                     switchCamButton.setVisibility(View.GONE);
-                    cropImageButton.setVisibility(View.VISIBLE);
+                    if(SET_CROP_OPTIONAL) cropImageButton.setVisibility(View.VISIBLE);
                     confirm.show(toAnimate);
                     cancel.show(toAnimate);
 
@@ -1191,7 +1203,7 @@ public class SquareCameraActivity extends AppCompatActivity implements SurfaceHo
             previewIv.setVisibility(View.VISIBLE);
             if (isFlashAvailable) flashToggleButton.setVisibility(View.GONE);
             switchCamButton.setVisibility(View.GONE);
-            cropImageButton.setVisibility(View.VISIBLE);
+            if(SET_CROP_OPTIONAL) cropImageButton.setVisibility(View.VISIBLE);
             confirm.show(toAnimate);
             cancel.show(toAnimate);
         }
@@ -1223,7 +1235,7 @@ public class SquareCameraActivity extends AppCompatActivity implements SurfaceHo
                     showCamToggle();
                     previewIv.setVisibility(View.INVISIBLE);
                     captureButton.setVisibility(View.VISIBLE);
-                    cropImageButton.setVisibility(View.GONE);
+                    if(SET_CROP_OPTIONAL) cropImageButton.setVisibility(View.GONE);
                     confirm.hide(toAnimate);
                     cancel.hide(toAnimate);
 
@@ -1258,7 +1270,7 @@ public class SquareCameraActivity extends AppCompatActivity implements SurfaceHo
             showCamToggle();
             previewIv.setVisibility(View.GONE);
             captureButton.setVisibility(View.GONE);
-            cropImageButton.setVisibility(View.GONE);
+            if(SET_CROP_OPTIONAL) cropImageButton.setVisibility(View.GONE);
             confirm.hide(toAnimate);
             cancel.hide(toAnimate);
         }
@@ -1879,6 +1891,105 @@ public class SquareCameraActivity extends AppCompatActivity implements SurfaceHo
         @Override
         public void onScaleEnd(ScaleGestureDetector detector) {
             super.onScaleEnd(detector);
+        }
+    }
+
+
+    public static ActivityBuilder activity(){
+        return new ActivityBuilder();
+    }
+
+    public static final class ActivityBuilder{
+
+        private boolean DISPLAY_FLASH_TOGGLE = true;
+        private boolean DISPLAY_SWITCH_CAM = true;
+        private boolean SHOW_ZOOM_SEEKBAR = true;
+        private boolean ALLOW_ZOOM_GESTURE = true;
+        private boolean ALLOW_ROTATION_ANIMATION = true;
+        private boolean SAVE_FILE_TO_STORAGE = false;
+        private boolean SET_CROP_OPTIONAL = false;
+        private boolean RETURN_DATA_AS_BYTE_ARRAY = true;
+        private int CROP_ASPECT_RATIO = -1;
+        private int cropRatioX;
+        private int cropRatioY;
+        private int LOAD_CAMERA = 0;
+
+
+
+        public ActivityBuilder displayFlashToggle(boolean flag){
+            DISPLAY_FLASH_TOGGLE = flag;
+            return this;
+        }
+
+        public ActivityBuilder displayCameraSwitchToggle(boolean flag){
+            DISPLAY_SWITCH_CAM = flag;
+            return this;
+        }
+
+        public ActivityBuilder showZoomBar(boolean flag){
+            SHOW_ZOOM_SEEKBAR = flag;
+            return this;
+        }
+
+        public ActivityBuilder allowZoomGesture(boolean flag){
+            ALLOW_ZOOM_GESTURE = flag;
+            return this;
+        }
+
+        public ActivityBuilder allowRotationAnimation(boolean flag){
+            ALLOW_ROTATION_ANIMATION = flag;
+            return this;
+        }
+
+        public ActivityBuilder saveFileToStorage(boolean flag){
+            SAVE_FILE_TO_STORAGE = flag;
+            return this;
+        }
+
+        public ActivityBuilder setCropOptional(boolean flag){
+            SET_CROP_OPTIONAL = flag;
+            return this;
+        }
+
+        public ActivityBuilder returnDataAsByteArray(boolean flag){
+            RETURN_DATA_AS_BYTE_ARRAY = flag;
+            return this;
+        }
+
+        public ActivityBuilder setCropAspectRatio(int ratio){
+            CROP_ASPECT_RATIO = ratio;
+            return this;
+        }
+
+        public ActivityBuilder setCropAspectRatio(int x,int y){
+            CROP_ASPECT_RATIO = -2;
+            cropRatioX = x;
+            cropRatioY = y;
+            return this;
+        }
+
+        public ActivityBuilder openWithCamera(int camId){
+            LOAD_CAMERA = camId;
+            return this;
+        }
+
+        public void start(Activity context){
+            Intent intent = new Intent(context, SquareCameraActivity.class);
+            intent.putExtra("DISPLAY_FLASH_TOGGLE",DISPLAY_FLASH_TOGGLE);
+            intent.putExtra("DISPLAY_SWITCH_CAM",DISPLAY_SWITCH_CAM);
+            intent.putExtra("SHOW_ZOOM_SEEKBAR",SHOW_ZOOM_SEEKBAR);
+            intent.putExtra("ALLOW_ZOOM_GESTURE",ALLOW_ZOOM_GESTURE);
+            intent.putExtra("ALLOW_ROTATION_ANIMATION",ALLOW_ROTATION_ANIMATION);
+            intent.putExtra("SAVE_FILE_TO_STORAGE",SAVE_FILE_TO_STORAGE);
+            intent.putExtra("SET_CROP_OPTIONAL",SET_CROP_OPTIONAL);
+            intent.putExtra("RETURN_DATA_AS_BYTE_ARRAY",RETURN_DATA_AS_BYTE_ARRAY);
+            intent.putExtra("CROP_ASPECT_RATIO",CROP_ASPECT_RATIO);
+            if(CROP_ASPECT_RATIO==-2){
+                intent.putExtra("cropAspectX",cropRatioX);
+                intent.putExtra("cropAspectY",cropRatioY);
+            }
+            intent.putExtra("LOAD_CAMERA",LOAD_CAMERA);
+            context.startActivityForResult(intent,SquareCameraActivity.REQUEST_CODE);
         }
     }
 }
