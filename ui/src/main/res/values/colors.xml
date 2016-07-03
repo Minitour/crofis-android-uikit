@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="green">#2ecc71</color>
+    <color name="green_dark">#27ae60</color>
+    <color name="green_light">#C8E6C9</color>
+    <color name="red">#e74c3c</color>
+    <color name="red_dark">#c0392b</color>
+    <color name="red_light">#FFCDD2</color>
+    <color name="blue">#3498db</color>
+    <color name="blue_dark">#2980b9</color>
+    <color name="blue_light">#BBDEFB</color>
+    <color name="grey">#607D8B</color>
+    <color name="grey_dark">#455A64</color>
+    <color name="grey_light">#CFD8DC</color>
+    <color name="camera_toolbar_color">#43000000</color>
+
+    <color name="multiple_image_select_primary">#34495e</color>
+    <color name="multiple_image_select_primaryDark">#2c3e50</color>
+    <color name="multiple_image_select_primaryLight">@color/grey_light</color>
+    <color name="multiple_image_select_accent">@color/green</color>
+
+    <color name="multiple_image_select_primaryText">#ffffff</color>
+    <color name="multiple_image_select_secondaryText">#727272</color>
+    <color name="multiple_image_select_divider">#B6B6B6</color>
+
+    <color name="multiple_image_select_toolbarPrimaryText">#FFFFFF</color>
+
+    <color name="multiple_image_select_albumTextBackground">#99000000</color>
+    <color name="multiple_image_select_imageSelectBackground">#000000</color>
+
+    <color name="multiple_image_select_buttonText">#FFFFFF</color>
+</resources>

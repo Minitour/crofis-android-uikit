@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:id="@+id/background"
+    android:background="@android:color/transparent">
+
+    <LinearLayout
+        android:id="@+id/dialogFrame"
+        android:clickable="true"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:background="@drawable/ui_dialog_design"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|top"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+        <FrameLayout
+            android:id="@+id/dialog_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <FrameLayout
+                android:animateLayoutChanges="true"
+                android:id="@+id/frame"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <net.crofis.ui.custom.PreviewSurfaceView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:id="@+id/surfaceView" />
+                <View
+                    android:visibility="gone"
+                    android:id="@+id/surfaceCover"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:background="@android:color/black"
+                    ></View>
+            </FrameLayout>
+
+            <com.github.clans.fab.FloatingActionButton
+                android:layout_margin="5dp"
+                android:id="@+id/camera"
+                fab:fab_showShadow="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|bottom"
+                android:src="@drawable/ic_camera_alt_white_24dp"
+                fab:fab_colorNormal="@color/grey"
+                fab:fab_colorPressed="@color/grey_dark"
+                fab:fab_colorRipple="@color/grey_dark"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <FrameLayout
+                android:layout_gravity="bottom|end"
+                android:id="@+id/preview_frame"
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_gravity="start|bottom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/preview" />
+                <FrameLayout
+                    android:layout_margin="5dp"
+                    android:layout_gravity="bottom"
+                    android:gravity="bottom|end"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <com.github.clans.fab.FloatingActionButton
+                        fab:fab_showShadow="false"
+                        android:id="@+id/neg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:src="@drawable/ic_clear_white_24dp"
+                        fab:fab_colorNormal="@color/red"
+                        fab:fab_colorPressed="@color/red_dark"
+                        fab:fab_colorRipple="@color/red_dark"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true" />
+                    <com.github.clans.fab.FloatingActionButton
+                        fab:fab_showShadow="false"
+                        android:id="@+id/pos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:src="@drawable/ic_check_white_24dp"
+                        fab:fab_colorNormal="@color/green"
+                        fab:fab_colorPressed="@color/green_dark"
+                        fab:fab_colorRipple="@color/green_dark"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true" />
+                </FrameLayout>
+            </FrameLayout>
+        </FrameLayout>
+
+    </LinearLayout>
+
+
+
+</FrameLayout>

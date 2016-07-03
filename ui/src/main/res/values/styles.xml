@@ -1,0 +1,87 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="EditTextMain" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/etx_chat_selector</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:padding">5dp</item>
+
+    </style>
+
+    <style name="ProgressBarSpinner" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:color">@color/green</item>
+    </style>
+
+    <style name="TextViewMain" parent="android:Widget.TextView">
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:padding">5dp</item>
+    </style>
+
+    <style name="ButtonMain" parent="Widget.AppCompat.Button">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@drawable/btn_selector_send</item>
+        <item name="android:layout_margin">5dp</item>
+
+    </style>
+
+    <style name="SeekBarMain" parent="Widget.AppCompat.SeekBar">
+
+    </style>
+
+    <style name="DialogMain" parent="@android:style/Theme.Dialog">
+        <item name="android:windowAnimationStyle">@style/customDialogAnimation</item>
+    </style>
+
+    <style name="customDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/push_up_in</item>
+        <item name="android:windowExitAnimation">@anim/push_up_out</item>
+    </style>
+
+    <style name="bottomDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/push_up_in</item>
+        <item name="android:windowExitAnimation">@anim/push_down_out</item>
+    </style>
+
+    <style name="topDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/push_down_in</item>
+        <item name="android:windowExitAnimation">@anim/push_up_out</item>
+    </style>
+
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="CameraTheme" parent="AppTheme.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!--<style name="MultipleImageSelectTheme" parent="Theme.AppCompat.Light.NoActionBar">-->
+        <!--<item name="colorPrimary">@color/multiple_image_select_primary</item>-->
+        <!--<item name="colorPrimaryDark">@color/multiple_image_select_primaryDark</item>-->
+        <!--<item name="colorAccent">@color/multiple_image_select_accent</item>-->
+
+        <!--<item name="actionModeStyle">@style/CustomActionModeStyle</item>-->
+        <!--<item name="windowActionModeOverlay">true</item>-->
+    <!--</style>-->
+
+    <!--<style name="CustomActionModeStyle" parent="Base.Widget.AppCompat.ActionMode">-->
+        <!--<item name="background">@color/multiple_image_select_primary</item>-->
+    <!--</style>-->
+
+    <style name="CustomToolbarTheme" parent="Base.ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:textColorPrimary">@color/multiple_image_select_toolbarPrimaryText</item>
+    </style>
+</resources>

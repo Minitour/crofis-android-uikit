@@ -1,0 +1,11 @@
+stages:
+  - build
+  - release
+build_job:
+  stage: build
+  script:
+  - echo "Beginning build"
+  - call gradlew.bat :ui:assembleRelease
+  artifacts:
+    paths:
+      - ui\build\outputs\aar\ui-release.aar

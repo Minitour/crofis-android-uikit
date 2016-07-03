@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:id="@+id/background"
+    android:background="@android:color/transparent">
+
+    <LinearLayout
+        android:id="@+id/dialogFrame"
+        android:clickable="true"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:background="@drawable/ui_dialog_design"
+        android:layout_marginTop="36dp"
+        android:layout_marginBottom="36dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:singleLine="true"
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Title"
+            android:id="@+id/dialog_title" />
+
+        <EditText
+            android:singleLine="true"
+            android:hint=""
+            style="@style/EditTextMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/dialog_car_plate" />
+
+        <EditText
+            android:gravity="start"
+            android:hint=""
+            android:lines="5"
+            android:maxLength="150"
+            style="@style/EditTextMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/dialog_message" />
+
+        <Button
+            android:visibility="gone"
+            style="@style/ButtonMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Send"
+            android:id="@+id/dialog_btn_send" />
+
+        <LinearLayout
+            android:visibility="gone"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+            <Button
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Button"
+                android:id="@+id/button3" />
+
+            <Button
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Button"
+                android:id="@+id/button4" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_gravity="start"
+                android:gravity="start|center"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <com.github.clans.fab.FloatingActionButton
+
+                    android:id="@+id/camera"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:src="@drawable/ic_camera_alt_white_24dp"
+                    fab:fab_colorNormal="@color/grey"
+                    fab:fab_colorPressed="@color/grey_dark"
+                    fab:fab_colorRipple="@color/grey_dark"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:padding="5dp"
+                    android:elevation="8dp"
+                    android:visibility="gone"
+                    android:id="@+id/image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:gravity="end|center"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.github.clans.fab.FloatingActionButton
+
+                    android:id="@+id/neg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:src="@drawable/ic_clear_white_24dp"
+                    fab:fab_colorNormal="@color/red"
+                    fab:fab_colorPressed="@color/red_dark"
+                    fab:fab_colorRipple="@color/red_dark"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/pos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:src="@drawable/ic_check_white_24dp"
+                    fab:fab_colorNormal="@color/green"
+                    fab:fab_colorPressed="@color/green_dark"
+                    fab:fab_colorRipple="@color/green_dark"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+            </LinearLayout>
+        </FrameLayout>
+
+
+
+    </LinearLayout>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_margin="5dp"
+        android:elevation="4dp"
+        android:translationZ="4dp"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:id="@+id/dialog_imageView"
+        android:background="@drawable/grey_oval"
+        android:layout_gravity="top|end" />
+
+
+</FrameLayout>

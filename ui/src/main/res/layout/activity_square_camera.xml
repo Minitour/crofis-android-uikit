@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    tools:context="net.crofis.ui.camera.CameraActivity"
+    android:animateLayoutChanges="true"
+    android:orientation="vertical">
+    <LinearLayout
+        android:visibility="visible"
+        android:orientation="vertical"
+        android:id="@+id/camera_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!-- Top tool bar-->
+        <FrameLayout
+            android:id="@+id/top_bar"
+            android:background="@android:color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <ImageView
+                android:clickable="true"
+                android:background="?selectableItemBackgroundBorderless"
+                android:padding="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/toggleFlash"
+                android:src="@drawable/ic_flash_off_white_24dp"
+                android:layout_gravity="left|center" />
+            <ImageView
+                android:clickable="true"
+                android:background="?selectableItemBackgroundBorderless"
+                android:visibility="invisible"
+                android:padding="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/cropImage"
+                android:src="@drawable/ic_crop_white_24dp"
+                android:layout_gravity="center" />
+
+            <ImageView
+                android:clickable="true"
+                android:background="?selectableItemBackgroundBorderless"
+                android:padding="16dp"
+                android:src="@drawable/ic_camera_alt_white_24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/toggleCam"
+                android:layout_gravity="right|center" />
+
+            <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_gravity="bottom"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                app:spb_sections_count="4"
+                app:spb_color="@android:color/holo_blue_light"
+                app:spb_speed="3"
+                app:spb_stroke_width="4dp"
+                app:spb_reversed="false"
+                app:spb_mirror_mode="false"
+                app:spb_progressiveStart_activated="false"
+                app:spb_progressiveStart_speed="3"
+                app:spb_progressiveStop_speed="3"
+                />
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <!-- Main Surface-->
+            <FrameLayout
+                android:id="@+id/frame"
+                android:background="@android:color/black"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <FrameLayout
+                    android:id="@+id/cameraFrame"
+                    android:animateLayoutChanges="true"
+                    android:background="@android:color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <net.crofis.ui.custom.PreviewSurfaceView
+                        android:translationZ="0dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/surfaceView" />
+
+                </FrameLayout>
+
+
+                <ImageView
+                    android:translationZ="1dp"
+                    android:visibility="invisible"
+                    android:scaleType="fitXY"
+                    android:layout_gravity="top"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/preview" />
+                <LinearLayout
+                    android:animateLayoutChanges="true"
+                    android:gravity="center"
+                    android:translationZ="2dp"
+                    android:clickable="true"
+                    android:orientation="vertical"
+                    android:id="@+id/hider"
+                    android:layout_gravity="bottom"
+                    android:background="@android:color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <!-- Bottom tool bar-->
+                    <LinearLayout
+                        android:padding="16dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="bottom">
+
+                        <FrameLayout
+                            android:background="@android:color/black"
+                            android:padding="5dp"
+                            android:layout_gravity="bottom"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:id="@+id/camera"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:src="@drawable/capture_image_selector" />
+
+                            <com.github.clans.fab.FloatingActionButton
+                                fab:fab_showShadow="false"
+                                android:id="@+id/pos"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="right|center"
+                                android:src="@drawable/ic_check_white_24dp"
+                                fab:fab_colorNormal="@color/green"
+                                fab:fab_colorPressed="@color/green_dark"
+                                fab:fab_colorRipple="@color/green_dark"
+                                android:layout_alignParentBottom="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentEnd="true" />
+
+                            <com.github.clans.fab.FloatingActionButton
+                                fab:fab_showShadow="false"
+                                android:id="@+id/neg"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left|center"
+                                android:src="@drawable/ic_clear_white_24dp"
+                                fab:fab_colorNormal="@color/red"
+                                fab:fab_colorPressed="@color/red_dark"
+                                fab:fab_colorRipple="@color/red_dark"
+                                android:layout_alignParentBottom="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentEnd="true" />
+                        </FrameLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </FrameLayout>
+
+
+        </FrameLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/crop_view_layout"
+        android:visibility="gone"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--TOP BAR -->
+        <FrameLayout
+            android:background="@android:color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:clickable="true"
+                android:background="?selectableItemBackgroundBorderless"
+                android:layout_gravity="right"
+                android:padding="16dp"
+                android:src="@drawable/crop_image_menu_rotate_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/action_rotate_right" />
+            <ImageView
+                android:clickable="true"
+                android:background="?selectableItemBackgroundBorderless"
+                android:layout_gravity="center"
+                android:padding="16dp"
+                android:src="@drawable/ic_restore_white_24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/action_restore" />
+            <ImageView
+                android:clickable="true"
+                android:background="?selectableItemBackgroundBorderless"
+                android:layout_gravity="left"
+                android:padding="16dp"
+                android:src="@drawable/ic_rotate_left_white_24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/action_rotate_left" />
+
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/crop_view_parent"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+        </FrameLayout>
+        <!--Bottom BAR -->
+        <FrameLayout
+            android:background="@android:color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:clickable="true"
+                android:background="?selectableItemBackgroundBorderless"
+                android:layout_gravity="end"
+                android:padding="16dp"
+                android:src="@drawable/ic_done_yellow_800_24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/action_done" />
+            <ImageView
+                android:clickable="true"
+                android:background="?selectableItemBackgroundBorderless"
+                android:layout_gravity="center"
+                android:padding="16dp"
+                android:src="@drawable/ic_aspect_ratio_white_24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/action_change_ratio" />
+            <ImageView
+                android:clickable="true"
+                android:background="?selectableItemBackgroundBorderless"
+                android:layout_gravity="start"
+                android:padding="16dp"
+                android:src="@drawable/ic_clear_white_24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/action_cancel" />
+        </FrameLayout>
+
+    </LinearLayout>
+</LinearLayout>

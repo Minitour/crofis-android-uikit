@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="android-permission-manager-1.0.0">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.buchandersenn/android-permission-manager/1.0.0/res" />
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.buchandersenn/android-permission-manager/1.0.0/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.buchandersenn/android-permission-manager/1.0.0/84551ca11ba77ce6ec3c7b512635d96a817be7b2/android-permission-manager-1.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

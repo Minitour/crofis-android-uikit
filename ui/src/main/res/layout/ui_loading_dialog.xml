@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:id="@+id/background"
+    android:background="@android:color/transparent">
+
+    <LinearLayout
+        android:id="@+id/dialogFrame"
+        android:clickable="true"
+        android:animateLayoutChanges="true"
+        android:gravity="center"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:background="@drawable/ui_dialog_design"
+        android:layout_marginTop="36dp"
+        android:layout_marginBottom="36dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
+        <TextView
+            android:layout_margin="10dp"
+            android:singleLine="true"
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Title"
+            android:id="@+id/dialog_title" />
+
+        <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
+            android:id="@+id/progress_bar"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            app:spb_sections_count="1"
+            app:spb_color="@color/green"
+            app:spb_speed="1.0"
+            app:spb_stroke_width="4dp"
+            app:spb_reversed="false"
+            app:spb_mirror_mode="false"
+            app:spb_progressiveStart_activated="true"
+            app:spb_progressiveStart_speed="1.5"
+            app:spb_progressiveStop_speed="3.4"
+            />
+
+        <TextView
+            android:layout_gravity="center"
+            android:focusable="true"
+            android:scrollbars="vertical"
+            android:maxLines="10"
+            android:text="message"
+            style="@style/TextViewMain"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:gravity="start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/dialog_message" />
+
+            <LinearLayout
+                android:layout_margin="10dp"
+                android:gravity="end"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/pos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|right"
+                    android:src="@drawable/ic_check_white_24dp"
+                    fab:fab_colorNormal="@color/green"
+                    fab:fab_colorPressed="@color/green_dark"
+                    fab:fab_colorRipple="@color/green_dark"
+                    app:fab_showAnimation="@anim/fab_scale_up"
+                    app:fab_hideAnimation="@anim/fab_scale_down"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+
+            </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

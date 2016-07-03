@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+
+
+    <TextView
+        android:id="@+id/text_view_request_permission"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="@string/permission_denied_albums"/>
+
+    <ProgressBar
+        android:id="@+id/progress_bar_album_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
+
+    <TextView
+        android:id="@+id/text_view_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/error_null_cursor"/>
+
+    <GridView
+        android:id="@+id/grid_view_album_select"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:paddingTop="1dp"
+        android:paddingBottom="1dp"
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp"
+        android:stretchMode="columnWidth"/>
+
+    <Button
+        android:id="@+id/button_grant_permission"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:padding="5dp"
+        android:text="@string/grant_permission"
+        android:textSize="15sp"
+        android:textAllCaps="true"
+        android:textColor="@color/multiple_image_select_buttonText"
+        android:background="@color/green"/>
+</RelativeLayout>

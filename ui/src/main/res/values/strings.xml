@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">UI</string>
+    <string name="album_view">Select photo album</string>
+    <string name="image_view">Tap to select images</string>
+    <string name="image_view_single">Tap to select image</string>
+
+    <string name="add">ADD</string>
+    <string name="selected">selected</string>
+    <string name="selected_single">Image Selected</string>
+    <string name="limit_exceeded">Can select a maximum of %d images</string>
+
+    <string name="permission_denied_albums">Allow access to photos, media and files on your device to view albums.</string>
+    <string name="permission_denied_images">Allow access to photos, media and files on your device to view images.</string>
+    <string name="grant_permission">Grant Permission</string>
+
+    <string name="text_loading">Loading...</string>
+    <string name="error_null_cursor">Something went wrong...</string>
+    <string name="error_no_images_found">No images found on this device!</string>
+    <string name="error_missing_permissions">Permissions not granted!</string>
+
+    <string name="camera_error_general">Error!</string>
+    <string name="camera_error_nocam">No Camera!</string>
+    <string name="camera_error_nocam_msg">Device does not have a camera!</string>
+    <string name="camera_error_perm">Missing Camera Permissions.</string>
+
+    <string name="crop_image_activity_title"></string>
+    <string name="crop_image_menu_rotate_right">Rotate</string>
+    <string name="crop_image_menu_crop">Crop</string>
+    <string name="camera_msg_save">Saving Image...</string>
+    <string name="select_action">Choose Action</string>
+
+    <string-array name="aspect_ratios">
+        <item>Original</item>
+        <item>1:1</item>
+        <item>2:3</item>
+        <item>3:5</item>
+        <item>3:4</item>
+        <item>4:5</item>
+        <item>5:7</item>
+        <item>9:16</item>
+        <item>Cancel</item>
+    </string-array>
+
+
+</resources>

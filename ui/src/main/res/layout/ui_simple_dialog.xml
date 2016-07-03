@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:id="@+id/background"
+    android:background="@android:color/transparent">
+
+    <LinearLayout
+        android:id="@+id/dialogFrame"
+        android:clickable="true"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:background="@drawable/ui_dialog_design"
+        android:layout_marginTop="36dp"
+        android:layout_marginBottom="36dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:singleLine="true"
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Title"
+            android:id="@+id/dialog_title" />
+
+
+
+
+            <TextView
+                android:focusable="true"
+                android:scrollbars="vertical"
+                android:maxLines="10"
+                android:text="message"
+                style="@style/TextViewMain"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:gravity="start"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/dialog_message" />
+
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:gravity="end"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.github.clans.fab.FloatingActionButton
+
+                    android:id="@+id/neg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|right"
+                    android:src="@drawable/ic_clear_white_24dp"
+                    fab:fab_colorNormal="@color/red"
+                    fab:fab_colorPressed="@color/red_dark"
+                    fab:fab_colorRipple="@color/red_dark"
+                    app:fab_showAnimation="@anim/fab_scale_up"
+                    app:fab_hideAnimation="@anim/fab_scale_down"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/pos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|right"
+                    android:src="@drawable/ic_check_white_24dp"
+                    fab:fab_colorNormal="@color/green"
+                    fab:fab_colorPressed="@color/green_dark"
+                    fab:fab_colorRipple="@color/green_dark"
+                    app:fab_showAnimation="@anim/fab_scale_up"
+                    app:fab_hideAnimation="@anim/fab_scale_down"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+            </LinearLayout>
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/natural"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:src="@drawable/ic_info_outline_white_24dp"
+                fab:fab_colorNormal="@color/blue"
+                fab:fab_colorPressed="@color/blue_dark"
+                fab:fab_colorRipple="@color/blue_dark"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+        </FrameLayout>
+
+
+
+
+    </LinearLayout>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_margin="5dp"
+        android:elevation="4dp"
+        android:translationZ="4dp"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:id="@+id/dialog_imageView"
+        android:background="@drawable/grey_oval"
+        android:layout_gravity="top|right" />
+
+
+</FrameLayout>
