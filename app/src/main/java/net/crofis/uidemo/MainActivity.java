@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        dialog.complete(true);
+                        dialog.complete(false,false,"new title","new message");
                     }
                 },5000);
 
@@ -120,14 +120,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 //                Intent intent = new Intent(MainActivity.this, CameraActivity.class);
 //                intent.putExtra(CameraActivity.FLAG_SET_CROP_OPTIONAL,true);
-//                intent.putExtra(SquareCameraActivity.FLAG_SAVE_TO_STORAGE,true);
+//                intent.putExtra(CameraActivity.FLAG_SAVE_TO_STORAGE,true);
+//                intent.putExtra(CameraActivity.FLAG_DISPLAY_SWITCH_CAM, false);
+//                intent.putExtra(CameraActivity.FLAG_ALLOW_ROTATION_ANIMATION,false);
 //                startActivityForResult(intent, CameraActivity.REQUEST_CODE);
 
 
                 CameraActivity.activity()
                         .setCropOptional(true)
-                        .saveFileToStorage(true)
-                        .setCropAspectRatio(1,3)
                         .start(MainActivity.this);
             }
         });
@@ -136,19 +136,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                Intent intent = new Intent(MainActivity.this, SquareCameraActivity.class);
-//                //intent.putExtra(SquareCameraActivity.FLAG_ALLOW_IMAGE_CROP,true);
 //                intent.putExtra(SquareCameraActivity.FLAG_DISPLAY_FLASH_TOGGLE,false);
 //                intent.putExtra(SquareCameraActivity.FLAG_DISPLAY_SWITCH_CAM,false);
-//                //intent.putExtra(SquareCameraActivity.FLAG_SAVE_TO_STORAGE,true);
-//                intent.putExtra(SquareCameraActivity.FLAG_SET_CROP_OPTIONAL, true);
+//                intent.putExtra(SquareCameraActivity.FLAG_SAVE_TO_STORAGE,true);
+//                intent.putExtra(SquareCameraActivity.FLAG_RETURN_DATA_AS_BYTE_ARRAY, true);
 //                intent.putExtra(SquareCameraActivity.FLAG_SET_CROP_ASPECT_RATIO, SquareCameraActivity.CROP_RATIO_1_1);
 //                startActivityForResult(intent, SquareCameraActivity.REQUEST_CODE);
 
                 SquareCameraActivity.activity()
-                        .displayFlashToggle(false)
-                        .displayCameraSwitchToggle(false)
+                        .displayFlashToggle(true)
+                        .displayCameraSwitchToggle(true)
                         .setCropOptional(true)
-                        .setCropAspectRatio(4,3)
+                        .setCropAspectRatio(1,1)
                         .start(MainActivity.this);
 
 

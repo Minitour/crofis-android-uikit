@@ -527,7 +527,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
                                             ratio2 = Integer.parseInt(ratios[finalI].split(":")[1]);
 
                                             //Check if integers are not 0 to avoid error.
-                                            if(ratio1 == 0 || ratio2 == 0) throw new ArithmeticException("Ratio Cannot contain 0 value!");
+                                            if(ratio1 <= 0 || ratio2 <= 0) throw new ArithmeticException("Ratio Cannot contain zero or negative value!");
                                             imageCropper.setAspectRatio(ratio1,ratio2 );
                                         }catch (NumberFormatException e){
                                             //Handle number format exception.

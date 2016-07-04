@@ -41,6 +41,7 @@
             android:id="@+id/preview" />
 
         <FrameLayout
+            android:animateLayoutChanges="true"
             android:layout_gravity="bottom|end"
             android:id="@+id/preview_frame"
             android:visibility="visible"
@@ -49,15 +50,16 @@
             >
 
             <LinearLayout
+
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="64dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="bottom">
                 <net.crofis.ui.custom.seekbar.SeekBarCompat
                     app:progressColor="@android:color/white"
                     app:thumbColor="@android:color/white"
                     android:progress="0"
-                    android:visibility="gone"
+                    android:visibility="invisible"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/seekBar"
@@ -70,7 +72,7 @@
                     android:gravity="bottom|end"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="64dp">
 
                     <ImageView
                         android:id="@+id/camera"
