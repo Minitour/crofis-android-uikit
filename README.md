@@ -2,7 +2,7 @@ Camera Kit
 ------
 
 ####Normal Camera:
-
+<img src="screenshots/device-2016-07-04-224046.png" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png"  height="400" />
 ```java
 import net.crofis.ui.camera.CameraActivity;
 ```
@@ -17,6 +17,7 @@ import net.crofis.ui.camera.CameraActivity;
 ```
 
 ####Square Camera:
+<img src="screenshots/device-2016-07-04-224311.png" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png"  height="400" />
 ```java
 import net.crofis.ui.camera.SquareCameraActivity;
 ```
@@ -123,6 +124,8 @@ Dialog Kit
 ####Loading Dialog
 This dialog makes use of the [SmoothProgressBar](https://github.com/castorflex/SmoothProgressBar) library by [castorflex](https://github.com/castorflex).
 
+<img src="screenshots/loading_dialog.gif" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png"  height="400" />
+
 **Usage:**
 ```java
     final LoadingDialog dialog = new LoadingDialog(MainActivity.this,"Loading...");
@@ -153,6 +156,8 @@ And to display a message on the dialog use the following method:
 ```
 ####Action Dialog
 This dialog was inspired by the iOS [UIAlertController](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIAlertController_class/) class. And its main usage is to present a ListView with custom actions inside a dialog. I made this dialog because I simply needed a dialog that can hold more than 3 buttons, So now I can have as many as I want. Note that even if the list view exceeds the screen's limit, there is the built in ScrollView that comes with the ListView. Another important thing to note is that I made this as dynamic as possible, so other developers can also create their own custom action items.
+
+<img src="screenshots/action_dialogs.gif" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png"  height="400" />
 
 **Usage:**
 ```java
