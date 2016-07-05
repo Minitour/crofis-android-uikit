@@ -1,8 +1,8 @@
 Camera Kit
 ------
-
+<img src="screenshots/device-2016-07-04-224046.png" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png"  height="400" /><img src="screenshots/device-2016-07-04-224311.png" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png"  height="400" /><img src="screenshots/device-2016-07-05-221651.png" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png"  height="400" /><img src="screenshots/camera_crop.gif" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png"  height="400" />
 ####Normal Camera:
-<img src="screenshots/device-2016-07-04-224046.png" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png"  height="400" />
+
 ```java
 import net.crofis.ui.camera.CameraActivity;
 ```
@@ -17,7 +17,7 @@ import net.crofis.ui.camera.CameraActivity;
 ```
 
 ####Square Camera:
-<img src="screenshots/device-2016-07-04-224311.png" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png"  height="400" />
+
 ```java
 import net.crofis.ui.camera.SquareCameraActivity;
 ```
