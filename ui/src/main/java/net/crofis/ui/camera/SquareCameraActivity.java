@@ -198,16 +198,15 @@ public class SquareCameraActivity extends AppCompatActivity implements SurfaceHo
     /**
      * Public static final Keys that are used to start the activity with custom parameters.
      */
+    public static final String FLAG_ALLOW_ORIENTATION_CHANGE = "ALLOW_ORIENTATION_CHANGE";
     public static final String FLAG_SET_CROP_ASPECT_RATIO = "CROP_ASPECT_RATIO";
     public static final String FLAG_SHOW_PROGRESS_BAR = "SHOW_PROGRESS_BAR";
-    public static final String FLAG_ALLOW_IMAGE_CROP = "ALLOW_IMAGE_CROP";
     public static final String FLAG_DISPLAY_FLASH_TOGGLE = "DISPLAY_FLASH_TOGGLE";
     public static final String FLAG_DISPLAY_SWITCH_CAM = "DISPLAY_SWITCH_CAM";
     public static final String FLAG_ALLOW_ZOOM_GESTURE = "ALLOW_ZOOM_GESTURE";
     public static final String FLAG_ALLOW_ROTATION_ANIMATION = "ALLOW_ROTATION_ANIMATION";
     public static final String FLAG_LOAD_CAM = "LOAD_CAMERA";
     public static final String FLAG_SAVE_TO_STORAGE = "SAVE_FILE_TO_STORAGE";
-    public static final String FLAG_ALLOW_CROP = "ALLOW_IMAGE_CROP";
     public static final String FLAG_SET_CROP_OPTIONAL = "SET_CROP_OPTIONAL";
     public static final String FLAG_RETURN_DATA_AS_BYTE_ARRAY = "RETURN_DATA_AS_BYTE_ARRAY";
 
@@ -332,6 +331,7 @@ public class SquareCameraActivity extends AppCompatActivity implements SurfaceHo
          * Initialize camera with custom parameters.
          */
         Intent intent = getIntent();
+        allow_rotation = intent.getBooleanExtra(FLAG_ALLOW_ORIENTATION_CHANGE,true);
         DISPLAY_FLASH_TOGGLE = intent.getBooleanExtra(FLAG_DISPLAY_FLASH_TOGGLE,true);
         DISPLAY_SWITCH_CAM = intent.getBooleanExtra(FLAG_DISPLAY_SWITCH_CAM,true);
         ALLOW_ZOOM_GESTURE = intent.getBooleanExtra(FLAG_ALLOW_ZOOM_GESTURE, true);
@@ -1901,9 +1901,9 @@ public class SquareCameraActivity extends AppCompatActivity implements SurfaceHo
 
     public static final class ActivityBuilder{
 
+        private boolean ALLOW_ORIENTATION_CHANGE = true;
         private boolean DISPLAY_FLASH_TOGGLE = true;
         private boolean DISPLAY_SWITCH_CAM = true;
-        private boolean SHOW_ZOOM_SEEKBAR = true;
         private boolean ALLOW_ZOOM_GESTURE = true;
         private boolean ALLOW_ROTATION_ANIMATION = true;
         private boolean SAVE_FILE_TO_STORAGE = false;
@@ -1914,53 +1914,120 @@ public class SquareCameraActivity extends AppCompatActivity implements SurfaceHo
         private int cropRatioY;
         private int LOAD_CAMERA = 0;
 
-
-
+        /**
+         * DISPLAY_FLASH_TOGGLE is true by default, however if you wish to disable the flash in the camera
+         * (Hide the flash button) call this method with @param flag = false
+         *
+         * @param flag The flag that decides if the flash-toggle button will show in the camera activity.
+         * @return The ActivityBuilder that we are building
+         */
         public ActivityBuilder displayFlashToggle(boolean flag){
             DISPLAY_FLASH_TOGGLE = flag;
             return this;
         }
 
+        /**
+         * DISPLAY_SWITCH_CAM is true by default, however if you want to prevent the user from switching between their cameras
+         * set @param flag to false
+         *
+         * @param flag The flag that decides if the cam-switch button will show in the camera activity.
+         * @return The ActivityBuilder that we are building
+         */
         public ActivityBuilder displayCameraSwitchToggle(boolean flag){
             DISPLAY_SWITCH_CAM = flag;
             return this;
         }
 
-        public ActivityBuilder showZoomBar(boolean flag){
-            SHOW_ZOOM_SEEKBAR = flag;
-            return this;
-        }
-
+        /**
+         * ALLOW_ZOOM_GESTURE is true by default. This flag , if enabled, will allow the user to pinch in order to zoom in and out.
+         *
+         * @param flag By setting this flag to false the user will lose capability of zooming in.
+         * @return The ActivityBuilder that we are building
+         */
         public ActivityBuilder allowZoomGesture(boolean flag){
             ALLOW_ZOOM_GESTURE = flag;
             return this;
         }
 
+        /**
+         * ALLOW_ROTATION_ANIMATION is true by default. This will have an effect only if ALLOW_ORIENTATION_CHANGE is also set to true.
+         * If this flag was set to true, when rotating the device the buttons will rotate with a smooth rotation animation. To disable this animation
+         * set this flag to false. Note that this won't prevent the icons from rotating, they will simply rotate without animation.
+         *
+         * @param flag Setting this to false will disable the animation that is applied to all views that rotate when the screen rotates.
+         * @return The ActivityBuilder that we are building
+         */
         public ActivityBuilder allowRotationAnimation(boolean flag){
             ALLOW_ROTATION_ANIMATION = flag;
             return this;
         }
 
+        /**
+         * SAVE_FILE_TO_STORAGE is set to false by default. When setting it to true any picture that is taken by the camera will be saved in a photo album.
+         *
+         * @param flag This allows you to save the images you capture into an external storage.
+         * @return The ActivityBuilder that we are building
+         */
         public ActivityBuilder saveFileToStorage(boolean flag){
             SAVE_FILE_TO_STORAGE = flag;
             return this;
         }
 
+        /**
+         * SET_CROP_OPTIONAL is set to false by default. This option, when enabled, will present the user with an option to crop the image they captured
+         * within the camera activity before sending it with the result intent.
+         *
+         * @param flag When set to true users will have the option to crop the image the captured.
+         * @return The ActivityBuilder that we are building
+         */
         public ActivityBuilder setCropOptional(boolean flag){
             SET_CROP_OPTIONAL = flag;
             return this;
         }
 
+        /**
+         * RETURN_DATA_AS_BYTE_ARRAY is true by default. Setting it to false will return the URI path of the image that was captured. This option may help
+         * you in cases where the image is way too big in size to pass within a result intent.
+         *
+         * When enabled, the result intent will include the path in the keys "data" and "uri".
+         *
+         * @param flag By setting this to false, the result intent of the camera actvity will return the URI path of the image, resulting in a better performance.
+         * @return The ActivityBuilder that we are building
+         */
         public ActivityBuilder returnDataAsByteArray(boolean flag){
             RETURN_DATA_AS_BYTE_ARRAY = flag;
             return this;
         }
 
+        /**
+         * This Method is deprecated.
+         * use setCropAspectRatio(int x,int y) instead.
+         *
+         * CROP_ASPECT_RATIO is set to -1 by default. This flag modification will only have an impact if SET_CROP_OPTIONAL is set to true.
+         *
+         * @param ratio is one of the following numbers: {0,1,2,3} where:
+         *              0 = 1:1 ratio
+         *              1 = 2:1 ratio
+         *              3 = 16:9 ratio
+         * @return The ActivityBuilder that we are building
+         */
+        @Deprecated
         public ActivityBuilder setCropAspectRatio(int ratio){
             CROP_ASPECT_RATIO = ratio;
             return this;
         }
 
+        /**
+         * CROP_ASPECT_RATIO is set to -1 by default. This flag modification will only have an impact if SET_CROP_OPTIONAL is set to true.
+         *
+         * Setting this flag will impact the CropView inside the camera activity, which will result with a locked aspect ratio of x:y
+         * Note that x and y cannot be equal to or less than zero, However the application can handle an exception and simply will set no specified
+         * aspect ratio and let the user choose a ratio.
+         *
+         * @param x The aspect ratio where x:y
+         * @param y The aspect ratio where x:y
+         * @return The ActivityBuilder that we are building
+         */
         public ActivityBuilder setCropAspectRatio(int x,int y){
             CROP_ASPECT_RATIO = -2;
             cropRatioX = x;
@@ -1968,16 +2035,46 @@ public class SquareCameraActivity extends AppCompatActivity implements SurfaceHo
             return this;
         }
 
+        /**
+         * ALLOW_ORIENTATION_CHANGE is set to true by default. By setting it to false, the gyro sensor will be locked
+         * and the activity buttons will not rotate with the screen.
+         *
+         * @param flag Set this to false if you wish to disable UI rotations.
+         * @return The ActivityBuilder that we are building
+         */
+        public ActivityBuilder setOrientationChangeEnabled(boolean flag){
+            ALLOW_ORIENTATION_CHANGE = flag;
+            return this;
+        }
+
+        /**
+         * LOAD_CAMERA flag is set to 0 by default, which is the back camera.
+         * This is the camera that will be loaded when the activity starts.
+         *
+         * @param camId You can set this to either 1 (Face Cam) or 0 (Back Cam)
+         * @return
+         */
         public ActivityBuilder openWithCamera(int camId){
             LOAD_CAMERA = camId;
             return this;
         }
 
+        /**
+         * This method will start the camera activity with the flags that were set using other methods in this class.
+         * Note this method uses an Activity Object to create and launh the intent.
+         * If you cannot access an activity use the getIntent(Context context) to get the built intent.
+         *
+         * @param context is the current activity (application context).
+         */
         public void start(Activity context){
+            context.startActivityForResult(getIntent(context),SquareCameraActivity.REQUEST_CODE);
+        }
+
+        public Intent getIntent(Context context){
             Intent intent = new Intent(context, SquareCameraActivity.class);
+            intent.putExtra("ALLOW_ORIENTATION_CHANGE",ALLOW_ORIENTATION_CHANGE);
             intent.putExtra("DISPLAY_FLASH_TOGGLE",DISPLAY_FLASH_TOGGLE);
             intent.putExtra("DISPLAY_SWITCH_CAM",DISPLAY_SWITCH_CAM);
-            intent.putExtra("SHOW_ZOOM_SEEKBAR",SHOW_ZOOM_SEEKBAR);
             intent.putExtra("ALLOW_ZOOM_GESTURE",ALLOW_ZOOM_GESTURE);
             intent.putExtra("ALLOW_ROTATION_ANIMATION",ALLOW_ROTATION_ANIMATION);
             intent.putExtra("SAVE_FILE_TO_STORAGE",SAVE_FILE_TO_STORAGE);
@@ -1989,7 +2086,7 @@ public class SquareCameraActivity extends AppCompatActivity implements SurfaceHo
                 intent.putExtra("cropAspectY",cropRatioY);
             }
             intent.putExtra("LOAD_CAMERA",LOAD_CAMERA);
-            context.startActivityForResult(intent,SquareCameraActivity.REQUEST_CODE);
+            return intent;
         }
     }
 }
