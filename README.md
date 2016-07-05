@@ -1,3 +1,7 @@
+Installation Instructions
+------
+Coming soon!
+
 Camera Kit
 ------
 <img src="screenshots/device-2016-07-04-224046.png" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png"  height="400" /><img src="screenshots/device-2016-07-04-224311.png" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png"  height="400" /><img src="screenshots/device-2016-07-05-221651.png" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png"  height="400" /><img src="screenshots/camera_crop.gif" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png"  height="400" />
@@ -69,7 +73,7 @@ And to display a message on the dialog use the following method:
 ####Action Dialog
 This dialog was inspired by the iOS [UIAlertController](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIAlertController_class/) class. And its main usage is to present a ListView with custom actions inside a dialog. I made this dialog because I simply needed a dialog that can hold more than 3 buttons, So now I can have as many as I want. Note that even if the list view exceeds the screen's limit, there is the built in ScrollView that comes with the ListView. Another important thing to note is that I made this as dynamic as possible, so other developers can also create their own custom action items.
 
-<img src="screenshots/action_dialogs.gif" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png"  height="400" />
+<img src="screenshots/device-2016-07-05-225154.png" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png"  height="400" /><img src="screenshots/action_dialogs.gif" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png"  height="400" />
 
 **Usage:**
 ```java
@@ -111,91 +115,16 @@ This dialog was inspired by the iOS [UIAlertController](https://developer.apple.
     //Finall, show the dialog
     dialog.show();
 ```
-**Create your own ActionItem class:**
+####Info Dialog
+Documentation and Usage examples coming soon!
 
-Here is an example of a class that extends ActionItem:
-```java
-    public class UIAlertAction extends ActionItem {
+####Message Dialog
+Documentation and Usage examples coming soon!
 
-        @Override
-        public String getTitle() {
-            return super.getTitle();
-        }
+####Camera Dialog
+Still a work in progress.
 
-        /**
-        * Default constructor.
-        *
-        * @param icon     - Action Icon
-        * @param title    - Action Title
-        * @param listener - Action Listener
-        */
-        public UIAlertAction(Drawable icon, String title, ActionItemClickListener listener) {
-            super(icon, title, listener);
-        }
-        
-        /**
-          * getView() is a method that is used only by sub-classes. It will always return null by the super class.
-          * Example on how to override:
-          *
-          * The following code snippet, will use the default item but it will be designed like iOS.
-          */
-        @Override
-        public View getView(Context context, boolean showActionIcons) {
-            View convertView =  LayoutInflater.from(context).inflate(R.layout.ui_general_action, null, false);
-            TextView title = (TextView) convertView.findViewById(R.id.action_title);
-            title.setText(getTitle());
-            title.setGravity(Gravity.CENTER);
-            title.setTextColor(context.getResources().getColor(R.color.blue));
-            if (false)((ImageView) convertView.findViewById(R.id.action_icon)).setImageDrawable(getIcon());
-            else convertView.findViewById(R.id.action_icon).setVisibility(View.GONE);
-            return convertView;
-        }
-    }
-```
+####Custom View Dialog
+Documentation and Usage examples coming soon!
 
-ui_general_action.xml
-```xml
-  <?xml version="1.0" encoding="utf-8"?>
-  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center_vertical">
 
-    <ImageView
-        android:layout_margin="8dp"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:id="@+id/action_icon" />
-
-    <TextView
-        android:layout_weight="1"
-        android:layout_margin="8dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
-        android:id="@+id/action_title" />
-</LinearLayout>
-```
-And then simply do:
-```java
-    ArrayList<ActionItem> items = new ArrayList<>();
-    for (int i = 0; i < 4; i++) {
-        final int finalI = i;
-        ActionItem item = new UIAlertAction(null, "item " + (i + 1), new ActionItemClickListener() {
-            @Override
-            public void onActionSelected() {
-                Toast.makeText(this,"item "+(finalI +1)+" selected.",Toast.LENGTH_SHORT).show();
-            }
-        });
-        items.add(item);
-    }
-
-    final ActionDialog dialog = new ActionDialog(this, items);
-    dialog.getTitle().setGravity(Gravity.CENTER);
-    dialog.getDescription().setGravity(Gravity.CENTER);
-    dialog.setDialogTitle("Select Action");
-    dialog.setDialogDescription("Select an action to close the dialog.");
-
-    dialog.show();
-```
