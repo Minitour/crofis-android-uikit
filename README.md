@@ -10,7 +10,7 @@ repositories {
 ...
  
 dependencies {
-    compile 'net.crofis.ui:crofis-android-uikit:1.0.0'
+    compile 'net.crofis:ui:1.0.1'
 }
 ```
 JCenter() installation coming soon!
