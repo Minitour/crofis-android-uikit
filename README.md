@@ -1,6 +1,20 @@
 Installation Instructions
 ------
-Coming soon!
+```groovy
+repositories {
+    maven {
+        url 'https://dl.bintray.com/minitour/maven/'
+    }
+}
+ 
+...
+ 
+dependencies {
+    compile 'net.crofis.ui:crofis-android-uikit:1.0.0'
+}
+```
+JCenter() installation coming soon!
+
 
 Camera Kit
 ------
