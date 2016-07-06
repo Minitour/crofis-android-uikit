@@ -3,7 +3,6 @@ package net.crofis.ui.dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,7 +37,6 @@ public class ActionDialog extends BaseAlertDialog{
     private boolean cancelable = true;
     private boolean isLocked = false;
     private boolean showActionIcons = true;
-    private Handler MainHandler;
 
     /**
      * Default ActionDialog constructor.
@@ -58,7 +56,6 @@ public class ActionDialog extends BaseAlertDialog{
         ActionDialogAdapter adapter = new ActionDialogAdapter(context,items);
         listView.setAdapter(adapter);
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        MainHandler = new Handler();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -102,7 +99,13 @@ public class ActionDialog extends BaseAlertDialog{
         if(!isLocked) dialog.dismiss();
     }
 
-
+    /**
+     * Sets the text on the dialog's title TextView.
+     *
+     * Note that if you do not set a title the title TextView's visibility will be set to to gone.
+     *
+     * @param title is the title you wish to set.
+     */
     public void setDialogTitle(String title){
         try {
             setTitleVisable(true);
@@ -112,6 +115,13 @@ public class ActionDialog extends BaseAlertDialog{
         }
     }
 
+    /**
+     * Sets the text on the dialog's description TextView.
+     *
+     * Note that if you do not set a description the description TextView's visibility will be set to to gone.
+     *
+     * @param description is the description you wish to set.
+     */
     public void setDialogDescription(String description){
         try{
             setDescriptionVisable(true);
@@ -121,6 +131,11 @@ public class ActionDialog extends BaseAlertDialog{
         }
     }
 
+    /**
+     * set the title visibility.
+     *
+     * @param show if true visibility will be VISIBLE, if false it will be set to GONE.
+     */
     public void setTitleVisable(boolean show){
         try{
             if(show)this.title.setVisibility(View.VISIBLE);
@@ -130,6 +145,11 @@ public class ActionDialog extends BaseAlertDialog{
         }
     }
 
+    /**
+     * set the description visibility.
+     *
+     * @param show if true visibility will be VISIBLE, if false it will be set to GONE.
+     */
     public void setDescriptionVisable(boolean show){
         try{
             if(show)this.description.setVisibility(View.VISIBLE);
@@ -162,7 +182,7 @@ public class ActionDialog extends BaseAlertDialog{
         return listView;
     }
 
-    public ArrayList<ActionItem> getItems() {
+    public ArrayList<ActionItem> getItems()    {
         return items;
     }
 

@@ -1,5 +1,29 @@
 apply plugin: 'com.android.library'
 
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'crofis-android-uikit'
+
+    publishedGroupId = 'net.crofis'
+    libraryName = 'crofis-android-uikit'
+    artifact = 'ui'
+
+    libraryDescription = 'A simply UIKit that is here to make developers\' life much easier.'
+
+    siteUrl = 'https://github.com/Minitour/crofis-android-uikit'
+    gitUrl = 'https://github.com/Minitour/crofis-android-uikit/issues'
+
+    libraryVersion = '1.0.0'
+
+    developerId = 'Minitour'
+    developerName = 'Antonio Zaitoun'
+    developerEmail = 'tony.z.1711@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
@@ -28,3 +52,8 @@ dependencies {
     compile 'com.github.castorflex.smoothprogressbar:library:1.1.0'
     compile 'com.github.bumptech.glide:glide:3.6.0'
 }
+
+
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
