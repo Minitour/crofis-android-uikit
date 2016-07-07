@@ -1,5 +1,16 @@
 Installation Instructions
 ------
+
+####JCenter
+
+Add this line to your dependencies if you are using JCenter:
+```groovy
+    compile 'net.crofis:ui:1.0.1'
+```
+
+####Maven Central
+
+Add this in your project build.gradle:
 ```groovy
 repositories {
     maven {
@@ -7,10 +18,11 @@ repositories {
     }
 }
  
-...
- 
+```
+And add this in your app module build.gradle.
+ ```groovy
 dependencies {
-    compile 'net.crofis.ui:crofis-android-uikit:1.0.0'
+    compile 'net.crofis:ui:1.0.1'
 }
 ```
 JCenter() installation coming soon!
