@@ -12,6 +12,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.hardware.Camera;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Display;
@@ -58,13 +59,8 @@ public class CameraDialog extends BaseAlertDialog implements SurfaceHolder.Callb
     private SurfaceHolder surfaceHolder;
 
     /**The Camera**/
+
     private Camera camera;
-
-    /**The View of the dialog**/
-    private View dialogView;
-
-    /**The Root AlertDialog**/
-    private AlertDialog dialog;
 
     /**In charge of the slide in animation**/
     private boolean allowAnimation = true;
@@ -124,6 +120,10 @@ public class CameraDialog extends BaseAlertDialog implements SurfaceHolder.Callb
     /**The Current device orientation**/
     private int Orientation = 1;
 
+
+
+
+
     /**
      * Camera auto focus call back, used when user taps the screen, if interaction is enabled.
      */
@@ -146,6 +146,41 @@ public class CameraDialog extends BaseAlertDialog implements SurfaceHolder.Callb
      */
     public CameraDialog(Context context){
         this.context = context;
+        init();
+    }
+
+    /**
+     *
+     * @param context is the Application context.
+     * @param params is the camera settings.
+     */
+    public CameraDialog(Context context,CameraParams params){
+        this.context = context;
+        init();
+        if(params!=null) {
+            this.picture_size = params.getPicture_size();
+            this.preview_size = params.getPreview_size();
+            this.camera_angle = params.getAngle();
+        }
+
+
+
+    }
+
+    /**
+     * Image preview constructor, SurfaceView does not get initialized.
+     * @param context is the application context.
+     * @param image is the image that will be displayed on preview.
+     */
+    public CameraDialog(Context context, Bitmap image){
+        this.context = context;
+        imageTaken = image;
+        init();
+
+    }
+
+
+    public void init(){
         setupOrientation();
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this.context);
         LayoutInflater inflater = LayoutInflater.from(this.context);
@@ -156,14 +191,15 @@ public class CameraDialog extends BaseAlertDialog implements SurfaceHolder.Callb
         cancel.hide(false);
         previewIv = (ImageView) dialogView.findViewById(R.id.preview);
         surfaceView = (PreviewSurfaceView) dialogView.findViewById(R.id.surfaceView);
-        surfaceHolder = surfaceView.getHolder();
+//        surfaceHolder = surfaceView.getHolder();
         surfaceCover = dialogView.findViewById(R.id.surfaceCover);
-
+        surfaceView.getHolder().addCallback(this);
 
         dialogView.findViewById(R.id.dialog_frame).post(new Runnable() {
             @Override
             public void run() {
                 postDialogCreated();
+                Log.i(TAG, "run: dialogView.post");
 
             }
         });
@@ -204,122 +240,13 @@ public class CameraDialog extends BaseAlertDialog implements SurfaceHolder.Callb
     }
 
     /**
-     *
-     * @param context is the Application context.
-     * @param params is the camera settings.
-     */
-    public CameraDialog(Context context,CameraParams params){
-        this.context = context;
-        setupOrientation();
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this.context);
-        LayoutInflater inflater = LayoutInflater.from(this.context);
-        dialogView = inflater.inflate(R.layout.ui_camera_dialog, null);
-        confirm = (FloatingActionButton) dialogView.findViewById(R.id.pos);
-        cancel = (FloatingActionButton) dialogView.findViewById(R.id.neg);
-        confirm.hide(false);
-        cancel.hide(false);
-        previewIv = (ImageView) dialogView.findViewById(R.id.preview);
-        surfaceView = (PreviewSurfaceView) dialogView.findViewById(R.id.surfaceView);
-        surfaceHolder = surfaceView.getHolder();
-        surfaceCover = dialogView.findViewById(R.id.surfaceCover);
-        if(params!=null) {
-            this.picture_size = params.getPicture_size();
-            this.preview_size = params.getPreview_size();
-            this.camera_angle = params.getAngle();
-        }
-
-
-        dialogView.findViewById(R.id.dialog_frame).post(new Runnable() {
-            @Override
-            public void run() {
-                postDialogCreated();
-
-            }
-        });
-
-        captureButton = (FloatingActionButton) dialogView.findViewById(R.id.camera);
-        captureButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (current_mode == 0) {
-                    camera.takePicture(null, null, jpegCallback);
-                    captureButton.hide(true);
-                    current_mode = 1;
-                }
-            }
-        });
-        surfaceView.setListener(this);
-        surfaceView.setFrame(dialogView.findViewById(R.id.frame));
-        surfaceView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                Display display = ((WindowManager) CameraDialog.this.context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-                int orientation = display.getRotation();
-                if (Orientation != convertSystemOrientation(orientation)) {
-                    dismiss();
-                    show();
-                }
-
-            }
-        });
-
-        dialogBuilder.setView(dialogView);
-        dialog = dialogBuilder.create();
-    }
-
-    /**
-     * Image preview constructor, SurfaceView does not get initialized.
-     * @param context is the application context.
-     * @param image is the image that will be displayed on preview.
-     */
-    public CameraDialog(Context context, Bitmap image){
-        this.context = context;
-        setupOrientation();
-        this.preview_mode = true;
-        this.current_mode = 1;
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this.context);
-        LayoutInflater inflater = LayoutInflater.from(this.context);
-        dialogView = inflater.inflate(R.layout.ui_camera_dialog, null);
-        confirm = (FloatingActionButton) dialogView.findViewById(R.id.pos);
-        cancel = (FloatingActionButton) dialogView.findViewById(R.id.neg);
-        confirm.hide(false);
-        cancel.hide(false);
-        imageTaken = image;
-        previewIv = (ImageView) dialogView.findViewById(R.id.preview);
-        dialogView.findViewById(R.id.dialog_frame).post(new Runnable() {
-            @Override
-            public void run() {
-                postDialogCreated();
-
-            }
-        });
-        surfaceView.setListener(this);
-        surfaceView.setFrame(dialogView.findViewById(R.id.frame));
-        surfaceView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                Display display = ((WindowManager) CameraDialog.this.context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-                int orientation = display.getRotation();
-                if (Orientation != convertSystemOrientation(orientation)) {
-                    dismiss();
-                    show();
-                }
-
-            }
-        });
-        surfaceCover = dialogView.findViewById(R.id.surfaceCover);
-        captureButton = (FloatingActionButton) dialogView.findViewById(R.id.camera);
-        dialogBuilder.setView(dialogView);
-        dialog = dialogBuilder.create();
-    }
-
-    /**
      * Displays the dialog.
      * If CameraDialog was initialized with image, the SurfaceView's holder will not have a callback.
      * else, CameraDialog will be called normally.
      */
     @Override
     public void show(){
+
         if (android.os.Build.VERSION.SDK_INT >= 23){
             String[] perms = {"android.permission.CAMERA"};
             int permsRequestCode = 200;
@@ -328,23 +255,18 @@ public class CameraDialog extends BaseAlertDialog implements SurfaceHolder.Callb
                 return;
             }
         }
+        Log.i(TAG, "show: ");
 
         this.dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         this.dialog.getWindow().getAttributes().dimAmount = 0;
         this.dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
         if (allowAnimation) dialog.getWindow().getAttributes().windowAnimations = R.style.customDialogAnimation;
-
         onRotate();
         dialog.show();
+        surfaceHolder = surfaceView.getHolder();
+        surfaceHolder.addCallback(this);
+        if(imageTaken!=null) {
 
-        surfaceView.setVisibility(View.GONE);
-        surfaceView.setVisibility(View.VISIBLE);
-        if(imageTaken==null) {
-
-            surfaceView.getHolder().addCallback(CameraDialog.this);
-
-        }
-        else{
             captureButton.hide(false);
 
             new Handler().postDelayed(new Runnable() {
@@ -353,8 +275,6 @@ public class CameraDialog extends BaseAlertDialog implements SurfaceHolder.Callb
                     showPreview(imageTaken,true);
                 }
             },100);
-
-
         }
         jpegCallback = new Camera.PictureCallback() {
             public void onPictureTaken(byte[] data, Camera camera) {
@@ -392,6 +312,8 @@ public class CameraDialog extends BaseAlertDialog implements SurfaceHolder.Callb
                 }
             }
         });
+
+
     }
 
     /**
@@ -569,11 +491,12 @@ public class CameraDialog extends BaseAlertDialog implements SurfaceHolder.Callb
      * Refresh the surface view, private method.
      */
     private void refreshCamera() {
+        Log.i(TAG, "refreshCamera: ");
         if (surfaceHolder.getSurface() == null || camera == null) {
             // preview surface does not exist
             return;
         }
-
+        Log.i(TAG, "refreshCamera: 1");
         // stop preview before making changes
         try {
             camera.stopPreview();
@@ -587,7 +510,7 @@ public class CameraDialog extends BaseAlertDialog implements SurfaceHolder.Callb
         Camera.Parameters param;
         param = camera.getParameters();
         setUpCameraParams(param);
-        camera.setParameters(param);
+        //camera.setParameters(param);
 
         camera.setDisplayOrientation(getAngle(this.camera_angle));
         try {
@@ -631,12 +554,14 @@ public class CameraDialog extends BaseAlertDialog implements SurfaceHolder.Callb
      */
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+        Log.i(TAG, "surfaceCreated: ");
         try {
             // open the camera
             camera = Camera.open();
+            cameraDidLoad();
         } catch (RuntimeException e) {
             // check for exceptions
-            System.err.println(e);
+            e.printStackTrace();
             return;
         }
         Camera.Parameters param;
@@ -692,14 +617,21 @@ public class CameraDialog extends BaseAlertDialog implements SurfaceHolder.Callb
      * Get the dialogView.
      * @return The main dialog view.
      */
+    @Override
     public View getDialogView() {
         return dialogView;
+    }
+
+    @Override
+    public Context getContext() {
+        return context;
     }
 
     /**
      * Get the Alert Dialog.
      * @return The main Alert Dialog.
      */
+    @Override
     public AlertDialog getDialog() {
         return dialog;
     }
@@ -802,6 +734,7 @@ public class CameraDialog extends BaseAlertDialog implements SurfaceHolder.Callb
      * This method checks if the orientation has changed, and then modifies the views accordingly.
      */
     private void onRotate(){
+        Log.i(TAG, "onRotate: ");
         Display display = ((WindowManager) CameraDialog.this.context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         int orientation = display.getRotation();
         if(Orientation!=convertSystemOrientation(orientation)) {
@@ -829,19 +762,28 @@ public class CameraDialog extends BaseAlertDialog implements SurfaceHolder.Callb
 
     }
 
-    private void setUpCameraParams(Camera.Parameters param){
+    private strictfp void setUpCameraParams(Camera.Parameters param){
+        Log.i(TAG, "setUpCameraParams: ");
+
+        //list of supported preview sizes
         List<Camera.Size> previewSizes = camera.getParameters().getSupportedPreviewSizes();
 
+        //list of supported picture sizes
         List<Camera.Size> imageSizes = camera.getParameters().getSupportedPictureSizes();
 
-
-
+        //list of wide preview sizes (aspect ratio of 16:9)
         List<Camera.Size> widePreviewSizes = new ArrayList<>();
+
+        //list of normal preview sizes (aspect ratio of 4:3)
         List<Camera.Size> normalPreviewSizes = new ArrayList<>();
 
+        //list of supported wide picture sizes (aspect ratio of 16:9)
         List<Camera.Size> widePictureSizes = new ArrayList<>();
+
+        //list of supported normal picture sizes (aspect ratio of 4:3)
         List<Camera.Size> normalPictureSizes = new ArrayList<>();
 
+        //TODO: remove logging mechanics
         String previews = "", pictures = "";
         for (int i = 0; i < imageSizes.size(); i++) {
             Camera.Size s = imageSizes.get(i);
@@ -850,10 +792,10 @@ public class CameraDialog extends BaseAlertDialog implements SurfaceHolder.Callb
         Log.i("CameraDialog", "preview sizes:" + previews + ", picture sizes:" + pictures);
 
 
-
+        //filter and organize the supported previews that were found.
         for (int i = 0; i < previewSizes.size(); i++) {
             Camera.Size s = previewSizes.get(i);
-            if(((double) s.width/s.height ) > 1.33333333333 ){
+            if(((double) s.width/s.height ) > 1.70 ){
                 //16:9
                 widePreviewSizes.add(s);
             }
@@ -865,51 +807,115 @@ public class CameraDialog extends BaseAlertDialog implements SurfaceHolder.Callb
 
         }
 
+        //filter and organize the supported picture sizes that were found.
         for (int i = 0; i < imageSizes.size(); i++) {
             Camera.Size s = imageSizes.get(i);
-            //Log.i("CameraDialog","aspect: "+(double)s.height/s.width) ;
-            if(((double) s.width/s.height ) > 1.33333333333 ){
+            if(((double) s.width/s.height ) > 1.70 ){
                 //16:9
-                Log.i("CameraDialog","wide ["+s.height+","+s.width+"]");
                 widePictureSizes.add(s);
             }
             else{
                 //4:3
-                Log.i("CameraDialog","norma; ["+s.height+","+s.width+"]");
                 normalPictureSizes.add(s);
 
             }
 
         }
 
-
+        //Get the middle index - in order to get the average camera settings for best performance.
         int previewIndex = widePreviewSizes.size()/2;
         int pictureIndex = widePictureSizes.size()/2;
-        Camera.Size bestPreview = widePreviewSizes.get(previewIndex);
-        Camera.Size bestPicture = widePictureSizes.get(pictureIndex);
+
+        //The final objects to be used.
+        Camera.Size bestPreview;
+        Camera.Size bestPicture;
+        try {
+            //try to get the average camera settings - might result in a index out of bounds exception if device does not support a wide preview/picture.
+            bestPreview = widePreviewSizes.get(previewIndex);
+            bestPicture = widePictureSizes.get(pictureIndex);
+        }catch (IndexOutOfBoundsException e){
+            e.printStackTrace();
+            //Handle exception by using very first normal preview size that was given.
+            bestPreview = normalPreviewSizes.get(0);
+            bestPicture = normalPictureSizes.get(0);
+            //messure = 1.33333333333;
+        }
+
+        //continue setting up camera parameters.
         param.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
         param.setPreviewSize(bestPreview.width, bestPreview.height);
         param.setPictureSize(bestPicture.width,bestPicture.height);
-
+        camera.setParameters(param);
         Log.i("CameraDialog", "Selected: " + param.getPictureSize().width + "," + param.getPictureSize().height);
-    }
+        int lheight = param.getPictureSize().height;
+        int lwidth = param.getPictureSize().width;
+        boolean isWide =  lwidth == 0 ||lheight==0 ? false: ((double) lwidth/lheight) > 1.7;
+        Log.i(TAG, "postDialogCreated: width: "+lwidth+", height:"+lheight+", is wide? "+isWide+" "+(double)lheight/lwidth);
 
-    private void postDialogCreated(){
+
         if(Orientation==1) {
             CameraDialog.this.width = dialogView.findViewById(R.id.dialog_frame).getWidth();
-            CameraDialog.this.height = (int) (width * 1.77777777778);
+            CameraDialog.this.height = isWide? (int) (width * 1.77777777778): (int) (width * 1.33333333333);
             FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(width, height);
             surfaceView.setLayoutParams(layoutParams);
             previewIv.setLayoutParams(layoutParams);
             surfaceCover.setLayoutParams(layoutParams);
         }else{
             CameraDialog.this.width = dialogView.findViewById(R.id.dialog_frame).getWidth();
-            CameraDialog.this.height = (int) (width * 0.5625);
+            CameraDialog.this.height = isWide? (int) (width * 0.5625): (int) (width * 0.75);
             FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(width, height);
             surfaceView.setLayoutParams(layoutParams);
             previewIv.setLayoutParams(layoutParams);
             surfaceCover.setLayoutParams(layoutParams);
         }
+    }
+
+    private void postDialogCreated(){
+        try {
+            int lheight = camera.getParameters().getPictureSize().height;
+            int lwidth = camera.getParameters().getPictureSize().width;
+            Log.i(TAG, "postDialogCreated: width: "+lwidth+", height:"+lheight);
+            boolean isWide =  lwidth == 0 ||lheight==0 ?false:((double) lheight/lwidth) > 1.7;
+
+            if(Orientation==1) {
+                CameraDialog.this.width = dialogView.findViewById(R.id.dialog_frame).getWidth();
+                CameraDialog.this.height = isWide? (int) (width * 1.77777777778): (int) (width * 1.33333333333);
+                FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(width, height);
+                surfaceView.setLayoutParams(layoutParams);
+                previewIv.setLayoutParams(layoutParams);
+                surfaceCover.setLayoutParams(layoutParams);
+            }else{
+                CameraDialog.this.width = dialogView.findViewById(R.id.dialog_frame).getWidth();
+                CameraDialog.this.height = isWide? (int) (width * 0.5625): (int) (width * 0.75);
+                FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(width, height);
+                surfaceView.setLayoutParams(layoutParams);
+                previewIv.setLayoutParams(layoutParams);
+                surfaceCover.setLayoutParams(layoutParams);
+            }
+        }catch (NullPointerException e){
+            e.printStackTrace();
+            if(Orientation==1) {
+                CameraDialog.this.width = dialogView.findViewById(R.id.dialog_frame).getWidth();
+                CameraDialog.this.height = (int) (width * 1.33333333333);
+                FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(width, height);
+                surfaceView.setLayoutParams(layoutParams);
+                previewIv.setLayoutParams(layoutParams);
+                surfaceCover.setLayoutParams(layoutParams);
+            }else{
+                CameraDialog.this.width = dialogView.findViewById(R.id.dialog_frame).getWidth();
+                CameraDialog.this.height = (int) (width * 0.75);
+                FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(width, height);
+                surfaceView.setLayoutParams(layoutParams);
+                previewIv.setLayoutParams(layoutParams);
+                surfaceCover.setLayoutParams(layoutParams);
+            }
+        }
+
+    }
+
+    private void cameraDidLoad(){
+        Log.i(TAG,"Cam loaded");
+        postDialogCreated();
     }
 
     /**
@@ -1017,5 +1023,30 @@ public class CameraDialog extends BaseAlertDialog implements SurfaceHolder.Callb
         return 0;
     }
 
+
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch(requestCode){
+
+            case 200:
+                if(grantResults[0]==PackageManager.PERMISSION_GRANTED) {
+                    init();
+                    CameraDialog.this.show();
+                }
+                else {
+                    //handle error
+                    //CameraDialog.this.dismiss();
+                    final InfoDialog dialog = DialogManager.makeDialog(context,this.context.getString(R.string.camera_error_general),this.context.getString(R.string.camera_error_perm));
+                    dialog.setPostiveButtonOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    });
+                    dialog.setCancelable(false);
+                    dialog.show();
+                }
+                break;
+        }
+    }
 
 }

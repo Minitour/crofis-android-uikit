@@ -22,17 +22,11 @@ import java.util.ArrayList;
  * Created by Tony Zaitoun on 5/14/2016.
  */
 public class ActionDialog extends BaseAlertDialog{
-    private Context context;
+
     private TextView title;
     private TextView description;
     private ListView listView;
     private ArrayList<ActionItem> items;
-
-    /**The View of the dialog**/
-    private View dialogView;
-
-    /**The Root AlertDialog**/
-    private AlertDialog dialog;
     private boolean allowAnimation = true;
     private boolean cancelable = true;
     private boolean isLocked = false;
@@ -166,12 +160,9 @@ public class ActionDialog extends BaseAlertDialog{
      */
 
 
+    @Override
     public Context getContext() {
         return context;
-    }
-
-    public void setContext(Context context) {
-        this.context = context;
     }
 
     public TextView getTitle() {
@@ -186,6 +177,7 @@ public class ActionDialog extends BaseAlertDialog{
         return items;
     }
 
+    @Override
     public View getDialogView() {
         return dialogView;
     }
@@ -193,7 +185,7 @@ public class ActionDialog extends BaseAlertDialog{
     public void setDialogView(View dialogView) {
         this.dialogView = dialogView;
     }
-
+    @Override
     public AlertDialog getDialog() {
         return dialog;
     }

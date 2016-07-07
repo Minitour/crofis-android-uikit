@@ -20,8 +20,6 @@ import net.crofis.ui.R;
 public class CustomViewDialog extends BaseAlertDialog {
     private static final String TAG = "CustomViewDialog";
 
-    /**Application context**/
-    private Context context;
 
     /**Title of the dialog**/
     private TextView title;
@@ -39,12 +37,6 @@ public class CustomViewDialog extends BaseAlertDialog {
     private LinearLayout customViewLayout;
 
     private View customView;
-
-    /**The View of the dialog**/
-    private View dialogView;
-
-    /**The Root AlertDialog**/
-    private AlertDialog dialog;
 
     /**In charge of the slide in animation**/
     private boolean allowAnimation = true;
@@ -111,7 +103,7 @@ public class CustomViewDialog extends BaseAlertDialog {
 
     }
 
-
+    @Override
     public Context getContext() {
         return context;
     }
@@ -169,6 +161,7 @@ public class CustomViewDialog extends BaseAlertDialog {
         NegativeListener = negativeListener;
     }
 
+    @Override
     public View getDialogView() {
         return dialogView;
     }
@@ -177,6 +170,7 @@ public class CustomViewDialog extends BaseAlertDialog {
         this.dialogView = dialogView;
     }
 
+    @Override
     public AlertDialog getDialog() {
         return dialog;
     }

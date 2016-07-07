@@ -27,9 +27,6 @@ public class InfoDialog extends BaseAlertDialog{
 
     private static final String TAG = "InfoDialog.class";
 
-    /**Application context**/
-    private Context context;
-
     /**Title of the dialog**/
     private TextView title;
 
@@ -53,12 +50,6 @@ public class InfoDialog extends BaseAlertDialog{
     private View.OnClickListener NegativeListener;
 
     private View.OnClickListener NaturalListener;
-
-    /**The View of the dialog**/
-    private View dialogView;
-
-    /**The Root AlertDialog**/
-    private AlertDialog dialog;
 
     /**An image that is set on the image**/
     private Bitmap imageBitmap;
@@ -190,6 +181,11 @@ public class InfoDialog extends BaseAlertDialog{
         else Log.e(TAG,"Dialog is locked.");
     }
 
+    @Override
+    public AlertDialog getDialog() {
+        return dialog;
+    }
+
     /**
      * Set a on click listener for the positive button.
      * @param listener is the positive listener.
@@ -307,8 +303,13 @@ public class InfoDialog extends BaseAlertDialog{
         return naturalButton;
     }
 
-
+    @Override
     public View getDialogView() {
         return dialogView;
+    }
+
+    @Override
+    public Context getContext() {
+        return context;
     }
 }

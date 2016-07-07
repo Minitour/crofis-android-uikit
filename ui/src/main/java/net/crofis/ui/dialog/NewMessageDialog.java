@@ -28,9 +28,6 @@ public class NewMessageDialog extends BaseAlertDialog{
 
     private static final String TAG = "NewMessageDialog.class";
 
-    /**Application context**/
-    private Context context;
-
     /**Title of the dialog**/
     private TextView title;
 
@@ -54,12 +51,6 @@ public class NewMessageDialog extends BaseAlertDialog{
 
     /**Image taken by the user**/
     private Bitmap imageTaken=null;
-
-    /**The View of the dialog**/
-    private View dialogView;
-
-    /**The Root AlertDialog**/
-    private AlertDialog dialog;
 
     /**An image that is set on the image**/
     private Bitmap imageBitmap;
@@ -374,8 +365,14 @@ public class NewMessageDialog extends BaseAlertDialog{
         this.isLocked = isLocked;
     }
 
+    @Override
     public View getDialogView(){
         return this.dialogView;
+    }
+
+    @Override
+    public Context getContext() {
+        return context;
     }
 
     public TextView getTitle() {
@@ -442,6 +439,7 @@ public class NewMessageDialog extends BaseAlertDialog{
         return imageBitmap;
     }
 
+    @Override
     public AlertDialog getDialog() {
         return dialog;
     }

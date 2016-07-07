@@ -22,7 +22,7 @@ repositories {
 And add this in your app module build.gradle.
  ```groovy
 dependencies {
-    compile 'net.crofis:ui:1.0.1'
+    compile 'net.crofis:ui:1.0.2'
 }
 ```
 JCenter() installation coming soon!
@@ -148,7 +148,7 @@ Documentation and Usage examples coming soon!
 Documentation and Usage examples coming soon!
 
 ####Camera Dialog
-Still a work in progress.
+Documentation and Usage examples coming soon!
 
 ####Custom View Dialog
 Documentation and Usage examples coming soon!

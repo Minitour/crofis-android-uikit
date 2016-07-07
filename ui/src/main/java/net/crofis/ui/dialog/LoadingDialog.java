@@ -24,9 +24,6 @@ public class LoadingDialog extends BaseAlertDialog{
 
     private static final String TAG = "LoadingDialog.class";
 
-    /**Application context**/
-    private Context context;
-
     /**Title of the dialog**/
     private TextView title;
 
@@ -38,12 +35,6 @@ public class LoadingDialog extends BaseAlertDialog{
 
     /**Positive Button**/
     private FloatingActionButton postiveButton;
-
-    /**The View of the dialog**/
-    private View dialogView;
-
-    /**The Root AlertDialog**/
-    private AlertDialog dialog;
 
     /**In charge of the slide in animation**/
     private boolean allowAnimation = true;
@@ -282,7 +273,7 @@ public class LoadingDialog extends BaseAlertDialog{
     public void setCancelable(boolean cancelable) {
         this.cancelable = cancelable;
     }
-
+    @Override
     public Context getContext() {
         return context;
     }
@@ -290,11 +281,11 @@ public class LoadingDialog extends BaseAlertDialog{
     public void setContext(Context context) {
         this.context = context;
     }
-
+    @Override
     public AlertDialog getDialog() {
         return dialog;
     }
-
+    @Override
     public View getDialogView() {
         return dialogView;
     }

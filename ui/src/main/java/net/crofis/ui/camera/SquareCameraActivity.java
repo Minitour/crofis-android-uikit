@@ -240,8 +240,10 @@ public class SquareCameraActivity extends AppCompatActivity implements SurfaceHo
         public void onAutoFocus(boolean arg0, Camera arg1) {
             if (arg0){
                 camera.cancelAutoFocus();
+
             }
         }
+        
     };
 
     /**Tracker - used to track the preview's status (UI preview not camera preview) **/
@@ -1052,6 +1054,7 @@ public class SquareCameraActivity extends AppCompatActivity implements SurfaceHo
             try {
                 camera = Camera.open();
                 camera.setDisplayOrientation(getAngle(camera_angle));
+                captureButton.setVisibility(View.VISIBLE);
             }catch(RuntimeException e){
                 e.printStackTrace();
                 if (Build.VERSION.SDK_INT >= 23){
@@ -1749,6 +1752,7 @@ public class SquareCameraActivity extends AppCompatActivity implements SurfaceHo
     public void doTouchFocus(final Rect tfocusRect) {
         try {
             camera.autoFocus(myAutoFocusCallback);
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1862,6 +1866,8 @@ public class SquareCameraActivity extends AppCompatActivity implements SurfaceHo
 
         Log.i("CameraDialog", "Selected: " + param.getPictureSize().width + "," + param.getPictureSize().height);
     }
+
+
 
     /**
      * ScaleListener custom class, used for the Gesture Detector inorder to zoom.

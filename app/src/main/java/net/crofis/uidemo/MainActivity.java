@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
@@ -36,6 +37,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
 
+    CameraDialog camDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 },5000);
 
-//                final CustomViewDialog dialog = new CustomViewDialog(MainActivity.this);
+//                final CustomViewDialog camDialog = new CustomViewDialog(MainActivity.this);
 //                LinearLayout layout = new LinearLayout(MainActivity.this);
 //                layout.setOrientation(LinearLayout.VERTICAL);
 //                for (int i = 0; i < 50; i++) {
@@ -94,8 +96,8 @@ public class MainActivity extends AppCompatActivity {
 //                }
 //                ScrollView view = new ScrollView(MainActivity.this);
 //                view.addView(layout);
-//                dialog.setCustomView(view);
-//                dialog.show();
+//                camDialog.setCustomView(view);
+//                camDialog.show();
 
 
             }
@@ -104,14 +106,16 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn4).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final CameraDialog cameraDialog = new CameraDialog(MainActivity.this);
-                cameraDialog.show();
-                cameraDialog.setPostImageTaken(new Runnable() {
+                 camDialog = new CameraDialog(MainActivity.this);
+                camDialog.show();
+                camDialog.setPostImageTaken(new Runnable() {
                     @Override
                     public void run() {
-                        ((ImageView) findViewById(R.id.imageView)).setImageBitmap(cameraDialog.getImageTaken());
+                        ((ImageView) findViewById(R.id.imageView)).setImageBitmap(camDialog.getImageTaken());
                     }
                 });
+
+
             }
         });
 
@@ -152,6 +156,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
             }
         });
 
@@ -175,8 +181,8 @@ public class MainActivity extends AppCompatActivity {
                 DialogManager.setDialogPosition(dialog,dialog.getDialog(), Gravity.BOTTOM);
 
                 dialog.setDialogTitle("Select Action");
-                dialog.setDialogDescription("Select an action to close the dialog.");
-                //dialog.setShowActionIcons(false);
+                dialog.setDialogDescription("Select an action to close the camDialog.");
+                //camDialog.setShowActionIcons(false);
                 dialog.show();
             }
         });
@@ -197,13 +203,13 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 final ActionDialog dialog = new ActionDialog(MainActivity.this, items);
-                //DialogManager.setDialogPosition(dialog,dialog.getDialog(), Gravity.BOTTOM);
+                //DialogManager.setDialogPosition(camDialog,camDialog.getDialog(), Gravity.BOTTOM);
                 dialog.getTitle().setGravity(Gravity.CENTER);
                 dialog.getDescription().setGravity(Gravity.CENTER);
                 dialog.setDialogTitle("Select Action");
-                dialog.setDialogDescription("Select an action to close the dialog.");
+                dialog.setDialogDescription("Select an action to close the camDialog.");
 
-                //dialog.setShowActionIcons(false);
+                //camDialog.setShowActionIcons(false);
                 dialog.show();
 
 
@@ -212,6 +218,12 @@ public class MainActivity extends AppCompatActivity {
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        camDialog.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override

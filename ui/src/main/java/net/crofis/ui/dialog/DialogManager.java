@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -286,7 +287,8 @@ public final class DialogManager {
      * @param dialog use dialog.getAlertDialog()
      * @param gravity The requested gravity (only top or bottom or center)
      */
-    public static void setDialogPosition(Object parent,Dialog dialog,int gravity){
+    @Deprecated
+    public static void setDialogPosition(BaseAlertDialog parent,Dialog dialog,int gravity){
 
         if(parent instanceof ActionDialog||parent instanceof InfoDialog||parent instanceof LoadingDialog){
             WindowManager.LayoutParams wlp = dialog.getWindow().getAttributes();
@@ -378,6 +380,53 @@ public final class DialogManager {
             Log.e(TAG, "setDialogPosition: Dialog type not supported! Supported dialogs: ActionDialog, InfoDialog, LoadingDialog.");
             return;
         }
+    }
+
+    /**
+     * Set the position of the dialog. Support every sub class of BaseAlertDialog.
+     *
+     * @param parent Sub class of BaseAlertDialog.
+     * @param gravity The requested position. Gravity.TOP, Gravity.BOTTOM
+     */
+    public static void setDialogPostion(BaseAlertDialog parent,int gravity){
+        AlertDialog dialog = parent.getDialog();
+        WindowManager.LayoutParams wlp = dialog.getWindow().getAttributes();
+
+        if(gravity == TOP ||gravity == BOTTOM||gravity == CENTER) wlp.gravity = gravity;
+        else {
+            Log.e(TAG, "setDialogPosition: Gravity type not supported! only Gravity.TOP or Gravity.BOTTOM.");
+            return;
+        }
+
+        //wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        wlp.windowAnimations = R.style.bottomDialogAnimation;
+        switch (gravity){
+            case BOTTOM:
+                wlp.windowAnimations = R.style.bottomDialogAnimation;
+                break;
+            case TOP:
+                wlp.windowAnimations = R.style.topDialogAnimation;
+                break;
+            default:
+                wlp.windowAnimations = R.style.customDialogAnimation;
+                break;
+        }
+        dialog.getWindow().setAttributes(wlp);
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)parent.getDialogView().getLayoutParams();
+        int topMargin = params.topMargin;
+        int leftMargin = params.leftMargin;
+        int rightMargin = params.rightMargin;
+        int bottomMargin = params.bottomMargin;
+        switch (gravity){
+            case BOTTOM:
+                bottomMargin/=3;
+                break;
+            case TOP:
+                topMargin/=3;
+                break;
+        }
+        params.setMargins(leftMargin,topMargin,rightMargin,bottomMargin);
+        parent.getDialogView().setLayoutParams(params);
     }
 
 
