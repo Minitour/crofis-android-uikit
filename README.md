@@ -5,7 +5,7 @@ Installation Instructions
 
 Add this line to your dependencies if you are using JCenter:
 ```groovy
-    compile 'net.crofis:ui:1.0.1'
+    compile 'net.crofis:ui:1.0.2'
 ```
 
 ####Maven Central
