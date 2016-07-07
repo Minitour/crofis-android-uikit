@@ -1,3 +1,5 @@
+![Maven Central](https://img.shields.io/badge/Maven%20Central-1.0.2-blue.svg) ![JCenter](https://img.shields.io/badge/JCenter-1.0.2-green.svg) ![Android 6 Support](https://img.shields.io/badge/Android-6.0-red.svg)
+
 Installation Instructions
 ------
 
