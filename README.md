@@ -2,7 +2,7 @@
 
 Table Of Contents
 ------
-
+* [Installation Instructions](https://github.com/Minitour/crofis-android-uikit#installation-instructions)
 * [Camera Kit](https://github.com/Minitour/crofis-android-uikit#camera-kit)
   * [Normal Camera](https://github.com/Minitour/crofis-android-uikit#normal-camera)
   * [Square Camera](https://github.com/Minitour/crofis-android-uikit#square-camera)
@@ -16,6 +16,8 @@ Table Of Contents
 * Tool Kit
   * Image Cropper Activity
   * Image Picker Activity
+* [Credits](https://github.com/Minitour/crofis-android-uikit#credits)
+
 
 Installation Instructions
 ------
