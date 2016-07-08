@@ -1,3 +1,5 @@
+![Maven Central](https://img.shields.io/badge/Maven%20Central-1.0.2-blue.svg) ![JCenter](https://img.shields.io/badge/JCenter-1.0.2-green.svg) ![Android 6 Support](https://img.shields.io/badge/Android-6.0-red.svg)
+
 Installation Instructions
 ------
 
@@ -5,7 +7,7 @@ Installation Instructions
 
 Add this line to your dependencies if you are using JCenter:
 ```groovy
-    compile 'net.crofis:ui:1.0.1'
+    compile 'net.crofis:ui:1.0.2'
 ```
 
 ####Maven Central
@@ -153,4 +155,22 @@ Documentation and Usage examples coming soon!
 ####Custom View Dialog
 Documentation and Usage examples coming soon!
 
+Credits
+------
+####This Library makes use of the following dependencies:
 
+[SmoothProgressBar](https://github.com/castorflex/SmoothProgressBar) by [castorflex](https://github.com/castorflex)
+
+[FloatingActionButton](https://github.com/Clans/FloatingActionButton) by [Clans](https://github.com/Clans)
+
+[CircleImageView](https://github.com/hdodenhof/CircleImageView) by [hdodenhof](https://github.com/hdodenhof)
+
+[android-permission-manager](https://github.com/buchandersenn/android-permission-manager) by [buchandersenn](https://github.com/buchandersenn)
+
+[glide](https://github.com/bumptech/glide) by [bumptech](https://github.com/bumptech)
+
+####And a modifed version of these libraries:
+
+[Android-Image-Cropper](https://github.com/ArthurHub/Android-Image-Cropper) by [ArthurHub](https://github.com/ArthurHub)
+
+[MultipleImageSelect](https://github.com/darsh2/MultipleImageSelect) by [darsh2](https://github.com/darsh2)
