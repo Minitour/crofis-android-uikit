@@ -11,7 +11,6 @@ import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.Camera;
 import android.os.Handler;
-import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -84,10 +83,10 @@ public class CameraDialog extends BaseAlertDialog implements SurfaceHolder.Callb
     Camera.PictureCallback jpegCallback;
 
     /**The code to be executed after an image was taken**/
-    private Runnable postImageTaken;
+    private PostPictureTaken postImageTaken;
 
     /**The code to be executed after an image was deleted**/
-    private Runnable postImageDeleted;
+    private PostPictureDeleted postImageDeleted;
 
     /**Height and Width of the SurfaceView - will be overrided**/
     private int height= 1;
@@ -193,7 +192,7 @@ public class CameraDialog extends BaseAlertDialog implements SurfaceHolder.Callb
         surfaceView = (PreviewSurfaceView) dialogView.findViewById(R.id.surfaceView);
 //        surfaceHolder = surfaceView.getHolder();
         surfaceCover = dialogView.findViewById(R.id.surfaceCover);
-        surfaceView.getHolder().addCallback(this);
+        //surfaceView.getHolder().addCallback(this);
 
         dialogView.findViewById(R.id.dialog_frame).post(new Runnable() {
             @Override
@@ -263,18 +262,21 @@ public class CameraDialog extends BaseAlertDialog implements SurfaceHolder.Callb
         if (allowAnimation) dialog.getWindow().getAttributes().windowAnimations = R.style.customDialogAnimation;
         onRotate();
         dialog.show();
-        surfaceHolder = surfaceView.getHolder();
-        surfaceHolder.addCallback(this);
+
+
         if(imageTaken!=null) {
-
+            preview_mode = true;
+            current_mode = 1;
             captureButton.hide(false);
-
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     showPreview(imageTaken,true);
                 }
             },100);
+        }else{
+            surfaceHolder = surfaceView.getHolder();
+            surfaceHolder.addCallback(this);
         }
         jpegCallback = new Camera.PictureCallback() {
             public void onPictureTaken(byte[] data, Camera camera) {
@@ -288,8 +290,7 @@ public class CameraDialog extends BaseAlertDialog implements SurfaceHolder.Callb
             public void onClick(View v) {
                 if (current_mode == 1) {
                     CameraDialog.this.dismiss();
-                    if (!preview_mode) if (postImageTaken != null)
-                        (new Handler(Looper.getMainLooper())).post(postImageTaken);
+                    if (!preview_mode) if (postImageTaken != null) postImageTaken.onConfirmPictureTaken(getImageTaken(), CameraDialog.this);//(new Handler(Looper.getMainLooper())).post(postImageTaken);
                     current_mode = 0;
                 }
 
@@ -306,8 +307,7 @@ public class CameraDialog extends BaseAlertDialog implements SurfaceHolder.Callb
                     } else {
                         dismiss();
                     }
-                    if (postImageDeleted != null)
-                        (new Handler(Looper.getMainLooper())).post(postImageDeleted);
+                    if (postImageDeleted != null) postImageDeleted.onPictureDeleted(CameraDialog.this);
                     current_mode = 0;
                 }
             }
@@ -332,6 +332,7 @@ public class CameraDialog extends BaseAlertDialog implements SurfaceHolder.Callb
 
             @Override
             public void onAnimationEnd(Animation animation) {
+
                 previewIv.setVisibility(View.VISIBLE);
                 surfaceCover.setVisibility(View.VISIBLE);
                 confirm.show(true);
@@ -468,6 +469,11 @@ public class CameraDialog extends BaseAlertDialog implements SurfaceHolder.Callb
      */
     @Override
     public void dismiss(){
+        try{
+            camera.stopPreview();
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
         dialog.dismiss();
     }
 
@@ -475,16 +481,26 @@ public class CameraDialog extends BaseAlertDialog implements SurfaceHolder.Callb
      * Run extra code after image was captured by setting a runnable on postImageTaken.
      * @param code this runnable will be executed after an image was captured.
      */
+    @Deprecated
     public void setPostImageTaken(Runnable code){
-        this.postImageTaken = code;
+        Log.e(TAG,"Deprecated method! use setPostImageTaken(PostPictureTaken) instead!");
+    }
+
+    public void setPostImageTaken(PostPictureTaken todo){
+        this.postImageTaken = todo;
     }
 
     /**
      * Run code after image was deleted.
      * @param code this runnable will be executed after an image was deleted.
      */
+    @Deprecated
     public void setPostImageDeleted(Runnable code){
-        this.postImageDeleted = code;
+        Log.e(TAG,"Deprecated method! use setPostImageDeleted(PostPictureDeleted) instead!");
+    }
+
+    public void setPostImageDeleted(PostPictureDeleted todo){
+        this.postImageDeleted = todo;
     }
 
     /**
@@ -1035,10 +1051,10 @@ public class CameraDialog extends BaseAlertDialog implements SurfaceHolder.Callb
                 else {
                     //handle error
                     //CameraDialog.this.dismiss();
-                    final InfoDialog dialog = DialogManager.makeDialog(context,this.context.getString(R.string.camera_error_general),this.context.getString(R.string.camera_error_perm));
-                    dialog.setPostiveButtonOnClickListener(new View.OnClickListener() {
+                    InfoDialog dialog = DialogManager.makeDialog(context,this.context.getString(R.string.camera_error_general),this.context.getString(R.string.camera_error_perm));
+                    dialog.setPostiveButtonOnClickListener(new OnClickListener() {
                         @Override
-                        public void onClick(View v) {
+                        public void onClick(View v, BaseAlertDialog dialog) {
                             dialog.dismiss();
                         }
                     });
@@ -1049,4 +1065,11 @@ public class CameraDialog extends BaseAlertDialog implements SurfaceHolder.Callb
         }
     }
 
+    public interface PostPictureTaken{
+        void onConfirmPictureTaken(Bitmap imageTaken, CameraDialog dialog);
+    }
+
+    public interface PostPictureDeleted{
+        void onPictureDeleted(CameraDialog dialog);
+    }
 }

@@ -19,14 +19,18 @@ public abstract class BaseAlertDialog {
     /**The Root AlertDialog**/
     AlertDialog dialog;
 
-    abstract void show();
+    public abstract void show();
 
-    abstract void dismiss();
+    public abstract void dismiss();
 
-    abstract AlertDialog getDialog();
+    public abstract AlertDialog getDialog();
 
-    abstract View getDialogView();
+    public abstract View getDialogView();
 
-    abstract Context getContext();
+    public abstract Context getContext();
 
+    public interface OnClickListener {
+
+        void onClick(View v, BaseAlertDialog dialog);
+    }
 }

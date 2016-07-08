@@ -191,23 +191,38 @@ public class InfoDialog extends BaseAlertDialog{
      * @param listener is the positive listener.
      */
 
-    public void setPostiveButtonOnClickListener(View.OnClickListener listener){
-        this.PositiveListener = listener;
-        this.postiveButton.setOnClickListener(listener);
+    public void setPostiveButtonOnClickListener(final OnClickListener listener){
+        this.PositiveListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onClick(v,InfoDialog.this);
+            }
+        };
+        this.postiveButton.setOnClickListener(PositiveListener);
     }
 
     /**
      * Set a on click listener for the negative button.
      * @param listener is the negative listener
      */
-    public  void setNegativeButtonOnClickListener(View.OnClickListener listener){
-        this.NegativeListener = listener;
-        this.negativeButton.setOnClickListener(listener);
+    public  void setNegativeButtonOnClickListener(final OnClickListener listener){
+        this.NegativeListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onClick(v,InfoDialog.this);
+            }
+        };
+        this.negativeButton.setOnClickListener(NegativeListener);
     }
 
-    public void setNaturalButtonOnClickListener(View.OnClickListener listener){
-        this.NaturalListener = listener;
-        this.naturalButton.setOnClickListener(listener);
+    public void setNaturalButtonOnClickListener(final OnClickListener listener){
+        this.NaturalListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onClick(v,InfoDialog.this);
+            }
+        };
+        this.naturalButton.setOnClickListener(NaturalListener);
     }
 
     public void setOnDismissListener(DialogInterface.OnDismissListener dismissListener){

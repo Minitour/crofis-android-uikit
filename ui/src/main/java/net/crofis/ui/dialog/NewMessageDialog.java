@@ -115,13 +115,13 @@ public class NewMessageDialog extends BaseAlertDialog{
                 if(imageTaken==null){
                     cameraDialog =  new CameraDialog(context, cameraParams);
                     cameraDialog.show();
-                    cameraDialog.setPostImageTaken(new Runnable() {
+                    cameraDialog.setPostImageTaken(new CameraDialog.PostPictureTaken() {
                         @Override
-                        public void run() {
+                        public void onConfirmPictureTaken(Bitmap img, CameraDialog dialog) {
                             cameraButton.setVisibility(View.GONE);
                             imagePreviewButton.setVisibility(View.VISIBLE);
-                            imagePreviewButton.setImageBitmap(cameraDialog.getImageTaken());
-                            imageTaken = cameraDialog.getImageTaken();
+                            imagePreviewButton.setImageBitmap(img);
+                            imageTaken = img;
                         }
                     });
                 }
@@ -133,16 +133,16 @@ public class NewMessageDialog extends BaseAlertDialog{
             public void onClick(View v) {
                 NewMessageDialog.this.cameraDialog = new CameraDialog(context,imageTaken);
                 cameraDialog.show();
-                cameraDialog.setPostImageTaken(new Runnable() {
+                cameraDialog.setPostImageTaken(new CameraDialog.PostPictureTaken() {
                     @Override
-                    public void run() {
-                        imagePreviewButton.setImageBitmap(cameraDialog.getImageTaken());
-                        imageTaken = cameraDialog.getImageTaken();
+                    public void onConfirmPictureTaken(Bitmap img, CameraDialog dialog) {
+                        imagePreviewButton.setImageBitmap(img);
+                        imageTaken = img;
                     }
                 });
-                cameraDialog.setPostImageDeleted(new Runnable() {
+                cameraDialog.setPostImageDeleted(new CameraDialog.PostPictureDeleted() {
                     @Override
-                    public void run() {
+                    public void onPictureDeleted(CameraDialog dialog) {
                         imageTaken=null;
                         cameraButton.setVisibility(View.VISIBLE);
                         imagePreviewButton.setVisibility(View.GONE);
@@ -194,15 +194,16 @@ public class NewMessageDialog extends BaseAlertDialog{
                 if(imageTaken==null){
                     cameraDialog =  new CameraDialog(context, cameraParams);
                     cameraDialog.show();
-                    cameraDialog.setPostImageTaken(new Runnable() {
+                    cameraDialog.setPostImageTaken(new CameraDialog.PostPictureTaken() {
                         @Override
-                        public void run() {
+                        public void onConfirmPictureTaken(Bitmap img, CameraDialog dialog) {
                             cameraButton.setVisibility(View.GONE);
                             imagePreviewButton.setVisibility(View.VISIBLE);
-                            imagePreviewButton.setImageBitmap(cameraDialog.getImageTaken());
-                            imageTaken = cameraDialog.getImageTaken();
+                            imagePreviewButton.setImageBitmap(img);
+                            imageTaken = img;
                         }
                     });
+
                 }
 
             }
@@ -212,16 +213,17 @@ public class NewMessageDialog extends BaseAlertDialog{
             public void onClick(View v) {
                 NewMessageDialog.this.cameraDialog = new CameraDialog(context,imageTaken);
                 cameraDialog.show();
-                cameraDialog.setPostImageTaken(new Runnable() {
+                cameraDialog.setPostImageTaken(new CameraDialog.PostPictureTaken() {
                     @Override
-                    public void run() {
-                        imagePreviewButton.setImageBitmap(cameraDialog.getImageTaken());
-                        imageTaken = cameraDialog.getImageTaken();
+                    public void onConfirmPictureTaken(Bitmap img, CameraDialog dialog) {
+                        imagePreviewButton.setImageBitmap(img);
+                        imageTaken = img;
                     }
                 });
-                cameraDialog.setPostImageDeleted(new Runnable() {
+
+                cameraDialog.setPostImageDeleted(new CameraDialog.PostPictureDeleted() {
                     @Override
-                    public void run() {
+                    public void onPictureDeleted(CameraDialog dialog) {
                         imageTaken=null;
                         cameraButton.setVisibility(View.VISIBLE);
                         imagePreviewButton.setVisibility(View.GONE);
@@ -301,6 +303,7 @@ public class NewMessageDialog extends BaseAlertDialog{
      * @param listener is the positive listener.
      */
 
+    @Deprecated
     public void setPostiveButtonOnClickListener(View.OnClickListener listener){
         this.PositiveListener = listener;
         this.postiveButton.setOnClickListener(listener);
@@ -310,9 +313,30 @@ public class NewMessageDialog extends BaseAlertDialog{
      * Set a on click listener for the negative button.
      * @param listener is the negative listener
      */
+    @Deprecated
     public  void setNegativeButtonOnClickListener(View.OnClickListener listener){
         this.NegativeListener= listener;
         this.negativeButton.setOnClickListener(listener);
+    }
+
+    public void setPostiveButtonOnClickListener(final OnClickListener listener){
+        this.PositiveListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onClick(v,NewMessageDialog.this);
+            }
+        };
+        this.postiveButton.setOnClickListener(PositiveListener);
+    }
+
+    public void setNegativeButtonOnClickListener(final OnClickListener listener){
+        this.NegativeListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onClick(v,NewMessageDialog.this);
+            }
+        };
+        this.negativeButton.setOnClickListener(NegativeListener);
     }
 
     public void setOnDismissListener(DialogInterface.OnDismissListener dismissListener){

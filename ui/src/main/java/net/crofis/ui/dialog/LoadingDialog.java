@@ -55,7 +55,7 @@ public class LoadingDialog extends BaseAlertDialog{
     private final String text_completed = "Progress Finished";
 
     /**Used to execute custom code when .complete() is called. null by default**/
-    private Runnable postComplete = null;
+    private PostCompleted postComplete = null;
 
     /**
      * Default constructor
@@ -238,9 +238,9 @@ public class LoadingDialog extends BaseAlertDialog{
      *
      * @param toExecute - is the runnable that will be executed.
      */
-    private void onCompleted(final Runnable toExecute){
+    private void onCompleted(PostCompleted toExecute){
         if(toExecute==null) return;
-        new Handler().post(toExecute);
+        toExecute.onComplete(this);
     }
 
     public void setProgressBarColor(String color){
@@ -311,12 +311,13 @@ public class LoadingDialog extends BaseAlertDialog{
         return message;
     }
 
-    public Runnable getPostComplete() {
-        return postComplete;
+    @Deprecated
+    public void setPostComplete(Runnable postComplete) {
+        //this.postComplete = postComplete;
     }
 
-    public void setPostComplete(Runnable postComplete) {
-        this.postComplete = postComplete;
+    public void setPostComplete(PostCompleted todo){
+        this.postComplete = todo;
     }
 
     public FloatingActionButton getPostiveButton() {
@@ -339,6 +340,8 @@ public class LoadingDialog extends BaseAlertDialog{
         return title;
     }
 
-
+    public interface PostCompleted{
+        void onComplete(LoadingDialog dialog);
+    }
 
 }

@@ -26,6 +26,7 @@ import net.crofis.ui.custom.imagepicker.activities.AlbumSelectActivity;
 import net.crofis.ui.custom.imagepicker.helpers.Constants;
 import net.crofis.ui.custom.imagepicker.models.Image;
 import net.crofis.ui.dialog.ActionDialog;
+import net.crofis.ui.dialog.BaseAlertDialog;
 import net.crofis.ui.dialog.CameraDialog;
 import net.crofis.ui.dialog.DialogManager;
 import net.crofis.ui.dialog.LoadingDialog;
@@ -47,30 +48,40 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //DialogManager.makeDialog(MainActivity.this,"Dialog Title","some informative text should be displayed here.").show();
-                Intent intent = new Intent(MainActivity.this, AlbumSelectActivity.class);
-//set limit on number of images that can be selected, default is 10
-                intent.putExtra(Constants.INTENT_EXTRA_LIMIT, 1);
-                startActivityForResult(intent, Constants.REQUEST_CODE);
+//                Intent intent = new Intent(MainActivity.this, AlbumSelectActivity.class);
+////set limit on number of images that can be selected, default is 10
+//                intent.putExtra(Constants.INTENT_EXTRA_LIMIT, 1);
+//                startActivityForResult(intent, Constants.REQUEST_CODE);
+
+                AlbumSelectActivity.activity().setPhotoLimit(21).start(MainActivity.this);
+
             }
         });
         findViewById(R.id.btn2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final NewMessageDialog messageDialog = DialogManager.makeMessageDialog(MainActivity.this, "New Message", false);//new NewMessageDialog(MainActivity.this);
-//                messageDialog.setTitle("New Message");
-//                messageDialog.setPostiveButtonOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        messageDialog.getRootDialog().cancel();
-//                        Toast.makeText(MainActivity.this, "Message Sent!", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//                messageDialog.setNegativeButtonOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        messageDialog.dismiss();
-//                    }
-//                });
+                NewMessageDialog messageDialog = DialogManager.makeMessageDialog(MainActivity.this, "New Message", true);//new NewMessageDialog(MainActivity.this);
+                messageDialog.setTitle("New Message");
+                messageDialog.getInputTitle().setText("TO: Minitour");
+                messageDialog.getInputTitle().setEnabled(false);
+                messageDialog.setImageBitmap(BitmapFactory.decodeResource(getResources(),
+                        R.drawable.demo_pic));
+                messageDialog.setPostiveButtonOnClickListener(new BaseAlertDialog.OnClickListener() {
+                    @Override
+                    public void onClick(View v, BaseAlertDialog dialog) {
+                        dialog.getDialog().dismiss();
+                        NewMessageDialog d = (NewMessageDialog) dialog;
+                        String message = d.getInputMessage().getText().toString();
+                        Toast.makeText(MainActivity.this, "["+message+"] Message Sent!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                messageDialog.setNegativeButtonOnClickListener(new BaseAlertDialog.OnClickListener() {
+                    @Override
+                    public void onClick(View v, BaseAlertDialog dialog) {
+
+                        dialog.dismiss();
+                    }
+                });
                 messageDialog.show();
             }
         });
@@ -79,6 +90,17 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 final LoadingDialog dialog = new LoadingDialog(MainActivity.this,"Loading...");
                 dialog.show();
+
+
+
+                dialog.setPostComplete(new LoadingDialog.PostCompleted() {
+                    @Override
+                    public void onComplete(LoadingDialog dialog) {
+                        //To something when finished.
+                    }
+                });
+
+
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -86,18 +108,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 },5000);
 
-//                final CustomViewDialog camDialog = new CustomViewDialog(MainActivity.this);
-//                LinearLayout layout = new LinearLayout(MainActivity.this);
-//                layout.setOrientation(LinearLayout.VERTICAL);
-//                for (int i = 0; i < 50; i++) {
-//                    TextView tv = new TextView(MainActivity.this);
-//                    tv.setText("hello world "+(i+1));
-//                    layout.addView(tv);
-//                }
-//                ScrollView view = new ScrollView(MainActivity.this);
-//                view.addView(layout);
-//                camDialog.setCustomView(view);
-//                camDialog.show();
 
 
             }
@@ -108,13 +118,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                  camDialog = new CameraDialog(MainActivity.this);
                 camDialog.show();
-                camDialog.setPostImageTaken(new Runnable() {
+                camDialog.setPostImageTaken(new CameraDialog.PostPictureTaken() {
                     @Override
-                    public void run() {
-                        ((ImageView) findViewById(R.id.imageView)).setImageBitmap(camDialog.getImageTaken());
+                    public void onConfirmPictureTaken(Bitmap imageTaken, CameraDialog dialog) {
+                        ((ImageView) findViewById(R.id.imageView)).setImageBitmap(imageTaken);
                     }
                 });
-
 
             }
         });
@@ -122,16 +131,10 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn5).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this, CameraActivity.class);
-//                intent.putExtra(CameraActivity.FLAG_SET_CROP_OPTIONAL,true);
-//                intent.putExtra(CameraActivity.FLAG_SAVE_TO_STORAGE,true);
-//                intent.putExtra(CameraActivity.FLAG_DISPLAY_SWITCH_CAM, false);
-//                intent.putExtra(CameraActivity.FLAG_ALLOW_ROTATION_ANIMATION,false);
-//                startActivityForResult(intent, CameraActivity.REQUEST_CODE);
-
 
                 CameraActivity.activity()
                         .setCropOptional(true)
+                        .saveFileToStorage(true)
                         .start(MainActivity.this);
             }
         });
@@ -139,13 +142,6 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn6).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this, SquareCameraActivity.class);
-//                intent.putExtra(SquareCameraActivity.FLAG_DISPLAY_FLASH_TOGGLE,false);
-//                intent.putExtra(SquareCameraActivity.FLAG_DISPLAY_SWITCH_CAM,false);
-//                intent.putExtra(SquareCameraActivity.FLAG_SAVE_TO_STORAGE,true);
-//                intent.putExtra(SquareCameraActivity.FLAG_RETURN_DATA_AS_BYTE_ARRAY, true);
-//                intent.putExtra(SquareCameraActivity.FLAG_SET_CROP_ASPECT_RATIO, SquareCameraActivity.CROP_RATIO_1_1);
-//                startActivityForResult(intent, SquareCameraActivity.REQUEST_CODE);
 
                 SquareCameraActivity.activity()
                         .displayFlashToggle(true)

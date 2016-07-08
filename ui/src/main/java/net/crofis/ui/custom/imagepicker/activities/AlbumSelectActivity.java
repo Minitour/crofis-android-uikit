@@ -1,6 +1,7 @@
 package net.crofis.ui.custom.imagepicker.activities;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -20,6 +21,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -33,6 +35,8 @@ import net.crofis.ui.R;
 import net.crofis.ui.custom.imagepicker.adapters.CustomAlbumSelectAdapter;
 import net.crofis.ui.custom.imagepicker.helpers.Constants;
 import net.crofis.ui.custom.imagepicker.models.Album;
+import net.crofis.ui.dialog.BaseAlertDialog;
+import net.crofis.ui.dialog.InfoDialog;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -69,7 +73,7 @@ public class AlbumSelectActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_album_select);
-
+        getSupportActionBar().hide();
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
        //setSupportActionBar(toolbar);
 
@@ -125,7 +129,7 @@ public class AlbumSelectActivity extends AppCompatActivity {
                 switch (msg.what) {
                     case Constants.PERMISSION_GRANTED: {
                         hidePermissionHelperUI();
-
+                        getSupportActionBar().show();
                         loadAlbums();
 
                         break;
@@ -218,8 +222,26 @@ public class AlbumSelectActivity extends AppCompatActivity {
     }
 
     private void showPermissionHelperUI() {
-        requestPermission.setVisibility(View.VISIBLE);
-        grantPermission.setVisibility(View.VISIBLE);
+       // requestPermission.setVisibility(View.VISIBLE);
+        //grantPermission.setVisibility(View.VISIBLE);
+        hidePermissionHelperUI();
+        final InfoDialog dialog = new InfoDialog(this);
+        dialog.setTitle(getResources().getString(R.string.error_missing_permissions));
+        dialog.setMessage(getResources().getString(R.string.permission_denied_albums));
+        dialog.setPostiveButtonOnClickListener(new BaseAlertDialog.OnClickListener() {
+            @Override
+            public void onClick(View v, BaseAlertDialog dialog) {
+                requestPermission();
+            }
+        });
+        dialog.setNegativeButtonOnClickListener(new BaseAlertDialog.OnClickListener() {
+            @Override
+            public void onClick(View v, BaseAlertDialog dialog) {
+                finish();
+            }
+        });
+        dialog.setCancelable(false);
+        dialog.show();
     }
 
     @Override
@@ -392,5 +414,54 @@ public class AlbumSelectActivity extends AppCompatActivity {
 
             Thread.interrupted();
         }
+    }
+
+    public static ActivityBuilder activity(){
+        return new ActivityBuilder();
+    }
+
+    /**
+     * Created by Tony Zaitoun on 7/8/2016
+     */
+    public static class ActivityBuilder{
+        protected static final int MAX_PHOTOS = 20;
+        protected static final int MIN_PHOTOS = 1;
+        protected int photo_limit = 10;
+
+        /**
+         * Set the photo limit. Ranges from 1 ~ 20 (inclusive).
+         *
+         * @param limit is the maximum amount of photos you wish the user selects.
+         * @return The Activity Builder class we are building.
+         */
+        public ActivityBuilder setPhotoLimit(int limit){
+            if (limit <= MIN_PHOTOS || limit > MAX_PHOTOS) {
+                this.photo_limit = 10;
+                Log.e(AlbumSelectActivity.class.getName(),"Error: photo_limit ranges between 1 ~ 20 (inclusive).");
+            }
+            else this.photo_limit = limit;
+            return this;
+        }
+
+        /**
+         * Starts the activity.
+         * @param context The application context.
+         */
+        public void start(Activity context){
+            context.startActivityForResult(getIntent(context), Constants.REQUEST_CODE);
+        }
+
+        /**
+         * Get the intent that we built using the ActivityBuilder class.
+         *
+         * @param context The application context.
+         * @return The intent the includes the parameters.
+         */
+        public Intent getIntent(Context context){
+            Intent intent = new Intent(context, AlbumSelectActivity.class);
+            intent.putExtra(Constants.INTENT_EXTRA_LIMIT, this.photo_limit);
+            return intent;
+        }
+
     }
 }

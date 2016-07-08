@@ -35,18 +35,21 @@
             android:id="@+id/dialog_title" />
 
         <EditText
+            android:elevation="2dp"
+            android:imeOptions="flagNoExtractUi"
             android:singleLine="true"
-            android:hint=""
+            android:hint="Recipient"
             style="@style/EditTextMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/dialog_car_plate" />
 
         <EditText
+            android:elevation="2dp"
+            android:imeOptions="flagNoExtractUi"
             android:gravity="start"
-            android:hint=""
-            android:lines="5"
-            android:maxLength="150"
+            android:hint="Message"
+            android:maxLines="2"
             style="@style/EditTextMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -88,10 +91,10 @@
 
             <LinearLayout
                 android:layout_gravity="start"
-                android:gravity="start|center"
+                android:gravity="start"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
                 <com.github.clans.fab.FloatingActionButton
 
                     android:id="@+id/camera"
@@ -121,7 +124,7 @@
 
 
             <LinearLayout
-                android:gravity="end|center"
+                android:gravity="end"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

@@ -22,6 +22,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -57,13 +58,13 @@ public class CropImageActivity extends AppCompatActivity implements CropImageVie
      */
     private CropImageOptions mOptions;
 
-    private final String [] ratios = {"Original","1:1","2:3","3:5","3:4","4:5","5:7","9:16","Cancel"};
+    private String [] ratios;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.crop_image_activity);
-
+        ratios = getResources().getStringArray(R.array.aspect_ratios);
         mCropImageView = (CropImageView) findViewById(R.id.cropImageView);
 
         Intent intent = getIntent();
@@ -119,19 +120,41 @@ public class CropImageActivity extends AppCompatActivity implements CropImageVie
                     items.add(new UIAlertAction(null, ratios[i], new ActionItemClickListener() {
                         @Override
                         public void onActionSelected() {
-                            switch (ratios[finalI]){
-                                case "Original":
-                                    mCropImageView.setFixedAspectRatio(false);
-                                    break;
-                                case "Cancel":
-                                    break;
-                                default:
-                                    mCropImageView.setFixedAspectRatio(true);
-                                    mCropImageView.setAspectRatio(Integer.parseInt(ratios[finalI].split(":")[0]),Integer.parseInt(ratios[finalI].split(":")[1]));
-                                    break;
+                            if(finalI==0){
+                                //Original was clicked
+                                mCropImageView.setFixedAspectRatio(false);
+                            }else if(finalI == ratios.length-1){
+                                //Cancel was clicked.
+                            }else{
+                                mCropImageView.setFixedAspectRatio(true);
+                                int ratio2;
+                                int ratio1;
+                                try {
+                                    //Validate aspect ratio format.
+                                    if(ratios[finalI].length()-1 != ratios[finalI].replace(":","").length()) throw new NumberFormatException("Invalid Aspect! Correct format is 'x:y'!");
 
+                                    //Parse String to Integers.
+                                    ratio1 = Integer.parseInt(ratios[finalI].split(":")[0]);
+                                    ratio2 = Integer.parseInt(ratios[finalI].split(":")[1]);
+
+                                    //Check if integers are not 0 to avoid error.
+                                    if(ratio1 <= 0 || ratio2 <= 0) throw new ArithmeticException("Ratio Cannot contain zero or negative value!");
+                                    mCropImageView.setAspectRatio(ratio1,ratio2 );
+                                }catch (NumberFormatException e){
+                                    //Handle number format exception.
+                                    e.printStackTrace();
+                                    Log.e(getClass().getName(),"Invalid Aspect Format.");
+                                    mCropImageView.setFixedAspectRatio(false);
+
+                                }catch (ArithmeticException e){
+                                    //Handle zero values.
+                                    e.printStackTrace();
+                                    Log.e(getClass().getName(),"Invalid Aspect given.");
+                                    mCropImageView.setFixedAspectRatio(false);
+                                }
 
                             }
+                            hide();
                         }
                     }));
                 }

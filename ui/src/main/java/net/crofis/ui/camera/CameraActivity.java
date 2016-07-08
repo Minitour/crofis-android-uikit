@@ -50,6 +50,7 @@ import net.crofis.ui.custom.actionitem.UIAlertAction;
 import net.crofis.ui.custom.cropper.CropImageView;
 import net.crofis.ui.custom.seekbar.SeekBarCompat;
 import net.crofis.ui.dialog.ActionDialog;
+import net.crofis.ui.dialog.BaseAlertDialog;
 import net.crofis.ui.dialog.DialogManager;
 import net.crofis.ui.dialog.InfoDialog;
 import net.crofis.ui.dialog.LoadingDialog;
@@ -594,9 +595,9 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
             switchCamButton.setVisibility(View.GONE);
             final InfoDialog dialog = DialogManager.makeDialog(this,getString(R.string.camera_error_nocam),getString(R.string.camera_error_nocam_msg));
             dialog.setCancelable(false);
-            dialog.setPostiveButtonOnClickListener(new View.OnClickListener() {
+            dialog.setPostiveButtonOnClickListener(new BaseAlertDialog.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View v, BaseAlertDialog dialog) {
                     Intent intent = new Intent();
                     intent.putExtra("data", (byte[]) null);
                     setResult(RESULT_CODE,intent);
@@ -1110,9 +1111,9 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
                     String[] perms = {"android.permission.CAMERA"};
                     if(((this).checkSelfPermission(perms[0])==PackageManager.PERMISSION_GRANTED)) {
                         final InfoDialog dialog = DialogManager.makeDialog(this,getString(R.string.camera_error_general),e.getMessage());
-                        dialog.setPostiveButtonOnClickListener(new View.OnClickListener() {
+                        dialog.setPostiveButtonOnClickListener(new BaseAlertDialog.OnClickListener() {
                             @Override
-                            public void onClick(View v) {
+                            public void onClick(View v, BaseAlertDialog dialog) {
                                 Intent intent = new Intent();
                                 intent.putExtra("data", (byte[]) null);
                                 setResult(RESULT_CODE,intent);
@@ -1528,10 +1529,10 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
                 }
                 else {
                     //handle error
-                    final InfoDialog dialog = DialogManager.makeDialog(this,getString(R.string.camera_error_general),getString(R.string.camera_error_perm));
-                    dialog.setPostiveButtonOnClickListener(new View.OnClickListener() {
+                    InfoDialog dialog = DialogManager.makeDialog(this,getString(R.string.camera_error_general),getString(R.string.camera_error_perm));
+                    dialog.setPostiveButtonOnClickListener(new BaseAlertDialog.OnClickListener() {
                         @Override
-                        public void onClick(View v) {
+                        public void onClick(View v, BaseAlertDialog dialog) {
                             Intent intent = new Intent();
                             intent.putExtra("data", (byte[]) null);
                             setResult(RESULT_CODE,intent);

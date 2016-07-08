@@ -145,20 +145,24 @@ public class CustomViewDialog extends BaseAlertDialog {
         this.negativeButton = negativeButton;
     }
 
-    public View.OnClickListener getPositiveListener() {
-        return PositiveListener;
+    public void setPositiveListener(final OnClickListener listener){
+        this.PositiveListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onClick(v,CustomViewDialog.this);
+            }
+        };
+        this.postiveButton.setOnClickListener(PositiveListener);
     }
 
-    public void setPositiveListener(View.OnClickListener positiveListener) {
-        PositiveListener = positiveListener;
-    }
-
-    public View.OnClickListener getNegativeListener() {
-        return NegativeListener;
-    }
-
-    public void setNegativeListener(View.OnClickListener negativeListener) {
-        NegativeListener = negativeListener;
+    public void setNegativeListener(final OnClickListener listener){
+        this.NegativeListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onClick(v,CustomViewDialog.this);
+            }
+        };
+        this.negativeButton.setOnClickListener(NegativeListener);
     }
 
     @Override
