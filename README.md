@@ -1,5 +1,22 @@
 ![Maven Central](https://img.shields.io/badge/Maven%20Central-1.0.3-blue.svg) ![JCenter](https://img.shields.io/badge/JCenter-1.0.3-green.svg) ![Android 6 Support](https://img.shields.io/badge/Android-6.0-red.svg)
 
+Table Of Contents
+------
+
+* [Camera Kit](https://github.com/Minitour/crofis-android-uikit#camera-kit)
+  * [Normal Camera](https://github.com/Minitour/crofis-android-uikit#normal-camera)
+  * [Square Camera](https://github.com/Minitour/crofis-android-uikit#square-camera)
+* [Dialog Kit](https://github.com/Minitour/crofis-android-uikit#dialog-kit)
+  * [Loading Dialog](https://github.com/Minitour/crofis-android-uikit#loading-dialog)
+  * [Action Dialog](https://github.com/Minitour/crofis-android-uikit#action-dialog)
+  * [Info Dialog](https://github.com/Minitour/crofis-android-uikit#info-dialog)
+  * [Message Dialog](https://github.com/Minitour/crofis-android-uikit#message-dialog)
+  * [Camera Dialog](https://github.com/Minitour/crofis-android-uikit#camera-dialog)
+  * [Custom View Dialog](https://github.com/Minitour/crofis-android-uikit#custom-view-dialog)
+* Tool Kit
+  * Image Cropper Activity
+  * Image Picker Activity
+
 Installation Instructions
 ------
 
@@ -27,7 +44,6 @@ dependencies {
     compile 'net.crofis:ui:1.0.3'
 }
 ```
-JCenter() installation coming soon!
 
 
 Camera Kit
