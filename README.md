@@ -7,7 +7,7 @@ Installation Instructions
 
 Add this line to your dependencies if you are using JCenter:
 ```groovy
-    compile 'net.crofis:ui:1.0.2'
+    compile 'net.crofis:ui:1.0.3'
 ```
 
 ####Maven Central
@@ -24,7 +24,7 @@ repositories {
 And add this in your app module build.gradle.
  ```groovy
 dependencies {
-    compile 'net.crofis:ui:1.0.2'
+    compile 'net.crofis:ui:1.0.3'
 }
 ```
 JCenter() installation coming soon!
