@@ -1,4 +1,4 @@
-![Maven Central](https://img.shields.io/badge/Maven%20Central-1.0.2-blue.svg) ![JCenter](https://img.shields.io/badge/JCenter-1.0.2-green.svg) ![Android 6 Support](https://img.shields.io/badge/Android-6.0-red.svg)
+![Maven Central](https://img.shields.io/badge/Maven%20Central-1.0.3-blue.svg) ![JCenter](https://img.shields.io/badge/JCenter-1.0.3-green.svg) ![Android 6 Support](https://img.shields.io/badge/Android-6.0-red.svg)
 
 Installation Instructions
 ------
@@ -66,14 +66,26 @@ Dialog Kit
 ------
 
 ####Loading Dialog
-This dialog makes use of the [SmoothProgressBar](https://github.com/castorflex/SmoothProgressBar) library by [castorflex](https://github.com/castorflex).
+This Dialog is used to indicate the user of a activity that is taking place in the background of the application.
+It is best used in the *AsyncTask* class, where you delcare it as a member of your extend class. Display it in the *pre-excute method*, change the text on it using ```.getMessage().setText("text");``` in the *do-in-background method*, and finally call ```.complete()``` in the *post-excecute method*.
 
 <img src="screenshots/loading_dialog.gif" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png"  height="400" />
 
 **Usage:**
 ```java
+    import net.crofis.ui.dialog.LoadingDialog;
+```
+
+```java
     final LoadingDialog dialog = new LoadingDialog(MainActivity.this,"Loading...");
     dialog.show();
+    
+    dialog.setPostComplete(new LoadingDialog.PostCompleted() {
+                    @Override
+                    public void onComplete(LoadingDialog dialog) {
+                        //Do something when finished.
+                    }
+    });
 ```
 
 And when ready to dismiss you can use one of the following:
@@ -144,13 +156,107 @@ This dialog was inspired by the iOS [UIAlertController](https://developer.apple.
     dialog.show();
 ```
 ####Info Dialog
-Documentation and Usage examples coming soon!
+InfoDialog, is the standard dialog, and the best tool in the kit to display the user a message which may or may not be involved with decision making. For example, asking the user if they want to delete an entry. Or using it for verfication, or simply display an informative message. 
 
+**Usage:**
+```java
+    import net.crofis.ui.dialog.InfoDialog;
+```
+
+```java
+    DialogManager
+        .makeDialog(MainActivity.this,"Dialog Title","some informative text should be displayed here.")
+        .show();
+```
+Or if you want something more complex:
+```java
+    InfoDialog infoDialog = new InfoDialog(this);
+    infoDialog.setTitle("My Awesome Title");
+    infoDialog.setMessage("Something I want to tell the user");
+    infoDialog.setPostiveButtonOnClickListener(new BaseAlertDialog.OnClickListener() {
+            @Override
+            public void onClick(View v, BaseAlertDialog dialog) {
+                    //Do whatever
+                    
+                    //You must add this otherwise the dialog will not dismiss.
+                    dialog.dismiss();
+            }
+    });
+    
+   infoDialog. setNegativeButtonOnClickListener(new BaseAlertDialog.OnClickListener() {
+            @Override
+            public void onClick(View v, BaseAlertDialog dialog) {
+                    //Do whatever
+                    
+                    dialog.dismiss();
+            }
+    });
+    
+    infoDialog.show();
+```
 ####Message Dialog
-Documentation and Usage examples coming soon!
+This dialog is meant for application in which a user must submit some sort of input. This dialog has a built in camera dialog - for image attachments, It can also hold an image on the top right of the it, to display a profile picture or an icon.
+**Usage:**
+```java
+    import net.crofis.ui.dialog.NewMessageDialog;
+```
+```java
+    NewMessageDialog messageDialog = DialogManager.makeMessageDialog(MainActivity.this, "New Message", true);
+    messageDialog.setTitle("New Message");
+    messageDialog.getInputTitle().setText("TO: Minitour");
+    messageDialog.getInputTitle().setEnabled(false);
+    messageDialog.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.demo_pic));
+    messageDialog.setPostiveButtonOnClickListener(new BaseAlertDialog.OnClickListener() {
+            @Override
+            public void onClick(View v, BaseAlertDialog dialog) {
+                    dialog.getDialog().dismiss();
+                    NewMessageDialog d = (NewMessageDialog) dialog;
+                    String message = d.getInputMessage().getText().toString();
+                    Toast.makeText(MainActivity.this, "["+message+"] Message Sent!", Toast.LENGTH_SHORT).show();
+                }
+            });
+            messageDialog.setNegativeButtonOnClickListener(new BaseAlertDialog.OnClickListener() {
+                @Override
+                public void onClick(View v, BaseAlertDialog dialog) {
+                    dialog.dismiss();
+                }
+            });
+    messageDialog.show();
+```
 
 ####Camera Dialog
-Documentation and Usage examples coming soon!
+Use this camera dialog if you want to give your users something simple to take picture with. Note this may be unstable, thus I recommended you use it in activities where your orientation is fixed.
+**Usage:**
+
+```java
+    import net.crofis.ui.dialog.CameraDialog; 
+```
+Must declare it as a global object - this is due to Android 23 permission system.
+```java
+    private CameraDialog camDialog;
+```
+**Initaliaze & Show:**
+```java
+    public void initCameraDialog(){
+        camDialog = new CameraDialog(this);
+        camDialog.show();
+        camDialog.setPostImageTaken(new CameraDialog.PostPictureTaken() {
+                @Override
+                public void onConfirmPictureTaken(Bitmap imageTaken, CameraDialog dialog) {
+                    //Do whatever you want with the image that was taken.
+                }
+        });
+    }
+```
+
+**Grant Permissions** - Note that you don't have to do this step, however if you wish to support Android 6.0+ devices (which I recommended) then include the following in your activity:
+```java
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        camDialog.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+```
 
 ####Custom View Dialog
 Documentation and Usage examples coming soon!
