@@ -32,7 +32,7 @@ JCenter() installation coming soon!
 
 Camera Kit
 ------
-<img src="screenshots/device-2016-07-04-224046.png" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png"  height="400" /><img src="screenshots/device-2016-07-04-224311.png" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png"  height="400" /><img src="screenshots/device-2016-07-05-221651.png" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png"  height="400" /><img src="screenshots/camera_crop.gif" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png"  height="400" />
+<img src="screenshots/device-2016-07-04-224046.png"  height="400" /><img src="screenshots/device-2016-07-04-224311.png"  height="400" /><img src="screenshots/device-2016-07-05-221651.png"  height="400" /><img src="screenshots/camera_crop.gif"  height="400" />
 ####Normal Camera:
 
 ```java
@@ -69,7 +69,7 @@ Dialog Kit
 This Dialog is used to indicate the user of a activity that is taking place in the background of the application.
 It is best used in the *AsyncTask* class, where you delcare it as a member of your extend class. Display it in the *pre-excute method*, change the text on it using ```.getMessage().setText("text");``` in the *do-in-background method*, and finally call ```.complete()``` in the *post-excecute method*.
 
-<img src="screenshots/loading_dialog.gif" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png"  height="400" />
+<img src="screenshots/loading_dialog.gif"  height="400" />
 
 **Usage:**
 ```java
@@ -77,7 +77,7 @@ It is best used in the *AsyncTask* class, where you delcare it as a member of yo
 ```
 
 ```java
-    final LoadingDialog dialog = new LoadingDialog(MainActivity.this,"Loading...");
+    final LoadingDialog dialog = new LoadingDialog(this,"Loading...");
     dialog.show();
     
     dialog.setPostComplete(new LoadingDialog.PostCompleted() {
@@ -113,7 +113,7 @@ And to display a message on the dialog use the following method:
 ####Action Dialog
 This dialog was inspired by the iOS [UIAlertController](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIAlertController_class/) class. And its main usage is to present a ListView with custom actions inside a dialog. I made this dialog because I simply needed a dialog that can hold more than 3 buttons, So now I can have as many as I want. Note that even if the list view exceeds the screen's limit, there is the built in ScrollView that comes with the ListView. Another important thing to note is that I made this as dynamic as possible, so other developers can also create their own custom action items.
 
-<img src="screenshots/device-2016-07-05-225154.png" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png"  height="400" /><img src="screenshots/action_dialogs.gif" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png"  height="400" />
+<img src="screenshots/device-2016-07-05-225154.png"  height="400" /><img src="screenshots/action_dialogs.gif"  height="400" />
 
 **Usage:**
 ```java
@@ -135,7 +135,7 @@ This dialog was inspired by the iOS [UIAlertController](https://developer.apple.
             @Override
             public void onActionSelected() {
                 //This is what will be triggered when the action is selected.
-                Toast.makeText(MainActivity.this,"item "+(finalI +1)+" selected.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"item "+(finalI +1)+" selected.",Toast.LENGTH_SHORT).show();
             }
         });
       items.add(item);
@@ -158,6 +158,10 @@ This dialog was inspired by the iOS [UIAlertController](https://developer.apple.
 ####Info Dialog
 InfoDialog, is the standard dialog, and the best tool in the kit to display the user a message which may or may not be involved with decision making. For example, asking the user if they want to delete an entry. Or using it for verfication, or simply display an informative message. 
 
+
+<img src="screenshots/device-2016-07-08-180338.png"   height="400" /><img src="screenshots/device-2016-07-08-181326.png"   height="400" />
+
+
 **Usage:**
 ```java
     import net.crofis.ui.dialog.InfoDialog;
@@ -165,7 +169,7 @@ InfoDialog, is the standard dialog, and the best tool in the kit to display the 
 
 ```java
     DialogManager
-        .makeDialog(MainActivity.this,"Dialog Title","some informative text should be displayed here.")
+        .makeDialog(this,"Dialog Title","some informative text should be displayed here.")
         .show();
 ```
 Or if you want something more complex:
@@ -196,12 +200,15 @@ Or if you want something more complex:
 ```
 ####Message Dialog
 This dialog is meant for application in which a user must submit some sort of input. This dialog has a built in camera dialog - for image attachments, It can also hold an image on the top right of the it, to display a profile picture or an icon.
+
+<img src="screenshots/device-2016-07-08-183925.png"   height="400" />
+
 **Usage:**
 ```java
     import net.crofis.ui.dialog.NewMessageDialog;
 ```
 ```java
-    NewMessageDialog messageDialog = DialogManager.makeMessageDialog(MainActivity.this, "New Message", true);
+    NewMessageDialog messageDialog = DialogManager.makeMessageDialog(this, "New Message", true);
     messageDialog.setTitle("New Message");
     messageDialog.getInputTitle().setText("TO: Minitour");
     messageDialog.getInputTitle().setEnabled(false);
@@ -212,7 +219,7 @@ This dialog is meant for application in which a user must submit some sort of in
                     dialog.getDialog().dismiss();
                     NewMessageDialog d = (NewMessageDialog) dialog;
                     String message = d.getInputMessage().getText().toString();
-                    Toast.makeText(MainActivity.this, "["+message+"] Message Sent!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "["+message+"] Message Sent!", Toast.LENGTH_SHORT).show();
                 }
             });
             messageDialog.setNegativeButtonOnClickListener(new BaseAlertDialog.OnClickListener() {
@@ -226,6 +233,9 @@ This dialog is meant for application in which a user must submit some sort of in
 
 ####Camera Dialog
 Use this camera dialog if you want to give your users something simple to take picture with. Note this may be unstable, thus I recommended you use it in activities where your orientation is fixed.
+
+
+<img src="screenshots/device-2016-07-08-183615.png"   height="400" />
 **Usage:**
 
 ```java
@@ -259,7 +269,40 @@ Must declare it as a global object - this is due to Android 23 permission system
 ```
 
 ####Custom View Dialog
-Documentation and Usage examples coming soon!
+Use this dialog if you want to include your own views, such as sign-up or sign-in.
+
+<img src="screenshots/device-2016-07-08-185532.png"   height="400" />
+
+**Usage:**
+```java
+   import net.crofis.ui.dialog.CustomViewDialog;
+```
+
+```java
+    CustomViewDialog dialog = new CustomViewDialog(this);
+    
+    //For this example I will added a CalenderView.
+    CalendarView calendarView = new CalendarView(this);
+    calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+                @Override
+                public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+                }
+    });
+    
+    //Setup Button listener.
+    dialog.setPositiveListener(new BaseAlertDialog.OnClickListener() {
+            @Override
+            public void onClick(View v, BaseAlertDialog dialog) {
+                    dialog.dismiss();
+            }
+    });
+    
+    //Set your custom view.
+    dialog.setCustomView(calendarView);
+    
+    //show dialog.
+    dialog.show();
+```
 
 Credits
 ------
