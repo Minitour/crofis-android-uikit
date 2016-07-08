@@ -155,4 +155,22 @@ Documentation and Usage examples coming soon!
 ####Custom View Dialog
 Documentation and Usage examples coming soon!
 
+Credits
+------
+####This Library makes use of the following dependencies:
 
+[SmoothProgressBar](https://github.com/castorflex/SmoothProgressBar) by [castorflex](https://github.com/castorflex)
+
+[FloatingActionButton](https://github.com/Clans/FloatingActionButton) by [Clans](https://github.com/Clans)
+
+[CircleImageView](https://github.com/hdodenhof/CircleImageView) by [hdodenhof](https://github.com/hdodenhof)
+
+[android-permission-manager](https://github.com/buchandersenn/android-permission-manager) by [buchandersenn](https://github.com/buchandersenn)
+
+[glide](https://github.com/bumptech/glide) by [bumptech](https://github.com/bumptech)
+
+####And a modifed version of these libraries:
+
+[Android-Image-Cropper](https://github.com/ArthurHub/Android-Image-Cropper) by [ArthurHub](https://github.com/ArthurHub)
+
+[MultipleImageSelect](https://github.com/darsh2/MultipleImageSelect) by [darsh2](https://github.com/darsh2)
