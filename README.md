@@ -1,5 +1,7 @@
 ![Maven Central](https://img.shields.io/badge/Maven%20Central-1.0.3-blue.svg) ![JCenter](https://img.shields.io/badge/JCenter-1.0.3-green.svg) ![Android 6 Support](https://img.shields.io/badge/Android-6.0-red.svg)
 
+Note: This libarary is not dead. I will be updating it as soon as I can. I am simply caught up with other projects right now which is why I was unable to work on it. Suggestions and Pull Requests are welcome.
+
 Table Of Contents
 ------
 * [Installation Instructions](https://github.com/Minitour/crofis-android-uikit#installation-instructions)
@@ -22,14 +24,14 @@ Table Of Contents
 Installation Instructions
 ------
 
-####JCenter
+#### JCenter
 
 Add this line to your dependencies if you are using JCenter:
 ```groovy
     compile 'net.crofis:ui:1.0.3'
 ```
 
-####Maven Central
+#### Maven Central
 
 Add this in your project build.gradle:
 ```groovy
@@ -51,7 +53,7 @@ dependencies {
 Camera Kit
 ------
 <img src="screenshots/device-2016-07-04-224046.png"  height="400" /><img src="screenshots/device-2016-07-04-224311.png"  height="400" /><img src="screenshots/device-2016-07-05-221651.png"  height="400" /><img src="screenshots/camera_crop.gif"  height="400" />
-####Normal Camera:
+#### Normal Camera:
 
 ```java
 import net.crofis.ui.camera.CameraActivity;
@@ -66,7 +68,7 @@ import net.crofis.ui.camera.CameraActivity;
                   .start(this);
 ```
 
-####Square Camera:
+#### Square Camera:
 
 ```java
 import net.crofis.ui.camera.SquareCameraActivity;
@@ -83,7 +85,7 @@ import net.crofis.ui.camera.SquareCameraActivity;
 Dialog Kit
 ------
 
-####Loading Dialog
+#### Loading Dialog
 This Dialog is used to indicate the user of a activity that is taking place in the background of the application.
 It is best used in the *AsyncTask* class, where you delcare it as a member of your extend class. Display it in the *pre-excute method*, change the text on it using ```.getMessage().setText("text");``` in the *do-in-background method*, and finally call ```.complete()``` in the *post-excecute method*.
 
@@ -128,7 +130,7 @@ And to display a message on the dialog use the following method:
      */
     public void complete(final boolean autoDismiss,final boolean isPositive,final String newTitle,final String newMsg);
 ```
-####Action Dialog
+#### Action Dialog
 This dialog was inspired by the iOS [UIAlertController](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIAlertController_class/) class. And its main usage is to present a ListView with custom actions inside a dialog. I made this dialog because I simply needed a dialog that can hold more than 3 buttons, So now I can have as many as I want. Note that even if the list view exceeds the screen's limit, there is the built in ScrollView that comes with the ListView. Another important thing to note is that I made this as dynamic as possible, so other developers can also create their own custom action items.
 
 <img src="screenshots/device-2016-07-05-225154.png"  height="400" /><img src="screenshots/action_dialogs.gif"  height="400" />
@@ -173,7 +175,7 @@ This dialog was inspired by the iOS [UIAlertController](https://developer.apple.
     //Finall, show the dialog
     dialog.show();
 ```
-####Info Dialog
+#### Info Dialog
 InfoDialog, is the standard dialog, and the best tool in the kit to display the user a message which may or may not be involved with decision making. For example, asking the user if they want to delete an entry. Or using it for verfication, or simply display an informative message. 
 
 
@@ -216,7 +218,7 @@ Or if you want something more complex:
     
     infoDialog.show();
 ```
-####Message Dialog
+#### Message Dialog
 This dialog is meant for application in which a user must submit some sort of input. This dialog has a built in camera dialog - for image attachments, It can also hold an image on the top right of the it, to display a profile picture or an icon.
 
 <img src="screenshots/device-2016-07-08-183925.png"   height="400" />
@@ -249,7 +251,7 @@ This dialog is meant for application in which a user must submit some sort of in
     messageDialog.show();
 ```
 
-####Camera Dialog
+#### Camera Dialog
 Use this camera dialog if you want to give your users something simple to take picture with. Note this may be unstable, thus I recommended you use it in activities where your orientation is fixed.
 
 
@@ -286,7 +288,7 @@ Must declare it as a global object - this is due to Android 23 permission system
     }
 ```
 
-####Custom View Dialog
+#### Custom View Dialog
 Use this dialog if you want to include your own views, such as sign-up or sign-in.
 
 <img src="screenshots/device-2016-07-08-185532.png"   height="400" />
@@ -324,7 +326,7 @@ Use this dialog if you want to include your own views, such as sign-up or sign-i
 
 Credits
 ------
-####This Library makes use of the following dependencies:
+#### This Library makes use of the following dependencies:
 
 [SmoothProgressBar](https://github.com/castorflex/SmoothProgressBar) by [castorflex](https://github.com/castorflex)
 
@@ -336,7 +338,7 @@ Credits
 
 [glide](https://github.com/bumptech/glide) by [bumptech](https://github.com/bumptech)
 
-####And a modifed version of these libraries:
+#### And a modifed version of these libraries:
 
 [Android-Image-Cropper](https://github.com/ArthurHub/Android-Image-Cropper) by [ArthurHub](https://github.com/ArthurHub)
 
